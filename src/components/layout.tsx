@@ -5,7 +5,6 @@ import { UserNav } from "./user-nav";
 import { MainNav } from "./main-nav";
 import { AppSidebar } from "./app-sidebar";
 import { NotificationDropdown } from "./notification-dropdown";
-import { cn } from "@/lib/utils";
 
 interface LayoutProps {
   children: React.ReactNode;
