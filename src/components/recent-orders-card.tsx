@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
-import { OrderStatusBadge } from "./order-status-badge";
+import { StatusBadge } from "@/components/ui/status-badge";
 import { OrderData } from "@/types";
 
 interface RecentOrdersCardProps {
@@ -50,7 +50,7 @@ export function RecentOrdersCard({ orders }: RecentOrdersCardProps) {
                     </td>
                     <td className="px-4 py-3 text-sm">{order.customer.name}</td>
                     <td className="px-4 py-3 text-sm">
-                      <OrderStatusBadge status={order.status} />
+                      <StatusBadge status={order.status} />
                     </td>
                     <td className="px-4 py-3 text-sm">{order.totalAmount}</td>
                     <td className="px-4 py-3 text-sm">
