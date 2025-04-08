@@ -1,18 +1,15 @@
 import { Layout } from "@/components/layout";
-import { OrderStatusBadge } from "@/components/order-status-badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
-  ArrowUpDown, 
+import {  
   FileUp, 
   FilterIcon, 
   PhoneOutgoing, 
   RefreshCcw, 
   Search, 
-  Truck 
 } from "lucide-react";
 import { useState } from "react";
 
