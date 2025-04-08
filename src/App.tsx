@@ -8,6 +8,9 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import OrdersPage from "./pages/OrdersPage";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
+import ReturnsPage from "./pages/ReturnsPage";
+import ShippingPage from "./pages/ShippingPage";
+import InventoryPage from "./pages/InventoryPage";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +24,9 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/orders" element={<OrdersPage />} />
           <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
+          <Route path="/returns" element={<ReturnsPage />} />
+          <Route path="/shipping" element={<ShippingPage />} />
+          <Route path="/inventory" element={<InventoryPage />} />
           {/* Additional routes can be added here */}
           <Route path="*" element={<NotFound />} />
         </Routes>
