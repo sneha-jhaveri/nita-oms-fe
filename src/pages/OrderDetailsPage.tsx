@@ -1,41 +1,16 @@
+
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  ArrowLeftIcon,
-  CreditCard as CreditCardIcon,
-  PackageIcon,
-  ReceiptIcon,
-  TruckIcon,
-  UserIcon,
-} from "lucide-react";
+import { ArrowLeftIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Layout } from "@/components/layout";
 import { mockOrders } from "@/data/mock-data";
-import { OrderData } from "@/types";
-import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { CourierOption } from "@/types";
+import { OrderData, CourierOption } from "@/types";
+import { CustomerInfoCard } from "@/components/orders/customer-info-card";
+import { ShippingInfoCard } from "@/components/orders/shipping-info-card";
+import { OrderItemsTable } from "@/components/orders/order-items-table";
+import { AdditionalInfoCard } from "@/components/orders/additional-info-card";
 
 const OrderDetailsPage = () => {
   const { orderId } = useParams<{ orderId: string }>();
@@ -110,9 +85,7 @@ const OrderDetailsPage = () => {
     setSelectedCourier(value);
   };
 
-  const handleTrackingIdChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleTrackingIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTrackingId(e.target.value);
   };
 
@@ -136,131 +109,30 @@ const OrderDetailsPage = () => {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Customer Information</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="flex items-center space-x-2">
-                <UserIcon className="h-4 w-4 text-muted-foreground" />
-                <span>{order.customer.name}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CreditCardIcon className="h-4 w-4 text-muted-foreground" />
-                <span>{order.paymentMethod}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <PackageIcon className="h-4 w-4 text-muted-foreground" />
-                <span>{order.items.length} items</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <ReceiptIcon className="h-4 w-4 text-muted-foreground" />
-                <span>Total: {order.totalAmount}</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Shipping Information</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="flex items-center space-x-2">
-                <TruckIcon className="h-4 w-4 text-muted-foreground" />
-                <span>Courier: {order.courier || "Not assigned"}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <TruckIcon className="h-4 w-4 text-muted-foreground" />
-                <span>Tracking ID: {order.trackingId || "Not available"}</span>
-              </div>
-              <div>
-                <Label htmlFor="courier">Courier</Label>
-                <Select value={selectedCourier} onValueChange={handleCourierChange}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select courier" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {courierOptions.map((courier) => (
-                      <SelectItem key={courier.id} value={courier.name}>
-                        {courier.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="trackingId">Tracking ID</Label>
-                <Input
-                  type="text"
-                  id="trackingId"
-                  value={trackingId || ""}
-                  onChange={handleTrackingIdChange}
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="lg:col-span-2">
-            <CardHeader>
-              <CardTitle>Order Items</CardTitle>
-            </CardHeader>
-            <CardContent className="p-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Item</TableHead>
-                    <TableHead className="text-right">Quantity</TableHead>
-                    <TableHead className="text-right">Price</TableHead>
-                    <TableHead className="text-right">Total</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {order.items.map((item) => (
-                    <TableRow key={item.id}>
-                      <TableCell>{item.name}</TableCell>
-                      <TableCell className="text-right">{item.quantity}</TableCell>
-                      <TableCell className="text-right">{item.price}</TableCell>
-                      <TableCell className="text-right">{item.total}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-                <TableFooter>
-                  <TableRow>
-                    <TableCell colSpan={3}>Total</TableCell>
-                    <TableCell className="text-right">{order.totalAmount}</TableCell>
-                  </TableRow>
-                </TableFooter>
-              </Table>
-            </CardContent>
-          </Card>
+          <CustomerInfoCard order={order} />
+          
+          <ShippingInfoCard
+            courier={order.courier}
+            trackingId={order.trackingId}
+            selectedCourier={selectedCourier}
+            courierOptions={courierOptions}
+            onCourierChange={handleCourierChange}
+            onTrackingIdChange={handleTrackingIdChange}
+          />
+          
+          <OrderItemsTable 
+            items={order.items} 
+            totalAmount={order.totalAmount} 
+          />
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>Additional Information</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <Label htmlFor="isDuplicate">Duplicate Order</Label>
-                <Input
-                  type="checkbox"
-                  id="isDuplicate"
-                  checked={isDuplicate}
-                  onChange={handleDuplicateChange}
-                />
-              </div>
-              <div>
-                <Label htmlFor="notes">Notes</Label>
-                <Textarea
-                  id="notes"
-                  placeholder="Order notes"
-                  value={notes}
-                  onChange={handleNotesChange}
-                />
-              </div>
-            </CardContent>
-          </Card>
+          <AdditionalInfoCard
+            isDuplicate={isDuplicate}
+            notes={notes}
+            onDuplicateChange={handleDuplicateChange}
+            onNotesChange={handleNotesChange}
+          />
         </div>
       </div>
     </Layout>
