@@ -1,7 +1,7 @@
 
 import { Layout } from "@/components/layout";
 import { mockOrders } from "@/data/mock-data";
-import { OrderTable } from "@/components/order-table";
+import { OrderTable } from "@/components/orders/order-table";
 import { FilterIcon, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
