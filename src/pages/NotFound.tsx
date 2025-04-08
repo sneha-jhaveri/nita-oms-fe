@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect } from "react";
 
 const NotFound = () => {
