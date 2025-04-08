@@ -133,7 +133,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
         {isSidebarOpen ? (
           <Link to="/" className="flex items-center">
             <BoxIcon className="h-6 w-6 text-primary mr-2" />
-            <span className="text-lg font-semibold">Order Nexus</span>
+            <span className="text-lg font-semibold">Nita KitchenMart</span>
           </Link>
         ) : (
           <Link to="/" className="flex items-center justify-center w-full">
