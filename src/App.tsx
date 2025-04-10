@@ -11,6 +11,7 @@ import OrderDetailsPage from "./pages/OrderDetailsPage";
 import ReturnsPage from "./pages/ReturnsPage";
 import ShippingPage from "./pages/ShippingPage";
 import InventoryPage from "./pages/InventoryPage";
+import LabelPrintingPage from "./pages/LabelPrintingPage";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/returns" element={<ReturnsPage />} />
           <Route path="/shipping" element={<ShippingPage />} />
           <Route path="/inventory" element={<InventoryPage />} />
+          <Route path="/labels" element={<LabelPrintingPage />} />
           {/* Additional routes can be added here */}
           <Route path="*" element={<NotFound />} />
         </Routes>
