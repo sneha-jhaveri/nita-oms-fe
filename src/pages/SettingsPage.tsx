@@ -2,56 +2,41 @@
 import { Layout } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import {
-  BellIcon,
-  Building,
-  CircleUser,
-  CreditCard,
-  FileText,
-  KeyIcon,
-  MailIcon,
-  MapPin,
-  Package2Icon,
-  Palette,
-  Save,
-  ShieldIcon,
-  TruckIcon,
-  UserCog,
-  Wallet
+import { 
+  Bell, 
+  CreditCard, 
+  GlobeIcon, 
+  HelpCircleIcon, 
+  KeyIcon, 
+  MailIcon, 
+  MessageSquareIcon, 
+  SaveIcon, 
+  ServerIcon,
+  Settings, 
+  Smartphone, 
+  ShieldCheck,
+  UserIcon,
+  Building2,
+  BellRing,
+  Calendar,
+  Smartphone as PhoneIcon,
+  Truck,
+  DatabaseIcon
 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { PlusIcon } from "lucide-react";
+import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
+import { useState } from "react";
 
 const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState("general");
-  
-  // Mock form states
-  const [companyName, setCompanyName] = useState("Nita Kitchen Pvt. Ltd.");
-  const [companyLogo, setCompanyLogo] = useState("");
-  const [taxId, setTaxId] = useState("GSTIN: 22AAAAA0000A1Z5");
-  const [address, setAddress] = useState("123 Business Park, Andheri East");
-  const [city, setCity] = useState("Mumbai");
-  const [state, setState] = useState("Maharashtra");
-  const [pincode, setPincode] = useState("400053");
-  const [country, setCountry] = useState("India");
-  const [phone, setPhone] = useState("+91 98765 43210");
-  const [email, setEmail] = useState("hello@nitakitchen.com");
-  const [website, setWebsite] = useState("https://www.nitakitchen.com");
-  
-  // Notification settings
-  const [emailNotifications, setEmailNotifications] = useState(true);
-  const [orderAlerts, setOrderAlerts] = useState(true);
-  const [stockAlerts, setStockAlerts] = useState(true);
-  const [returnsAlerts, setReturnsAlerts] = useState(true);
-  const [paymentAlerts, setPaymentAlerts] = useState(false);
-  const [marketingEmails, setMarketingEmails] = useState(false);
 
   return (
     <Layout>
@@ -63,834 +48,688 @@ const SettingsPage = () => {
           </p>
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <div>
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 lg:grid-cols-6 h-auto p-1 gap-1">
-              <TabsTrigger value="general" className="text-center py-2 h-auto flex flex-col items-center gap-1">
-                <Building className="h-4 w-4" />
-                <span>General</span>
-              </TabsTrigger>
-              <TabsTrigger value="profile" className="text-center py-2 h-auto flex flex-col items-center gap-1">
-                <CircleUser className="h-4 w-4" />
-                <span>Profile</span>
-              </TabsTrigger>
-              <TabsTrigger value="notifications" className="text-center py-2 h-auto flex flex-col items-center gap-1">
-                <BellIcon className="h-4 w-4" />
-                <span>Notifications</span>
-              </TabsTrigger>
-              <TabsTrigger value="shipping" className="text-center py-2 h-auto flex flex-col items-center gap-1">
-                <TruckIcon className="h-4 w-4" />
-                <span>Shipping</span>
-              </TabsTrigger>
-              <TabsTrigger value="payment" className="text-center py-2 h-auto flex flex-col items-center gap-1">
-                <Wallet className="h-4 w-4" />
-                <span>Payment</span>
-              </TabsTrigger>
-              <TabsTrigger value="security" className="text-center py-2 h-auto flex flex-col items-center gap-1">
-                <ShieldIcon className="h-4 w-4" />
-                <span>Security</span>
-              </TabsTrigger>
-            </TabsList>
-          </div>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="general">General</TabsTrigger>
+            <TabsTrigger value="notifications">Notifications</TabsTrigger>
+            <TabsTrigger value="shipping">Shipping</TabsTrigger>
+            <TabsTrigger value="billing">Billing</TabsTrigger>
+            <TabsTrigger value="api">API & Integrations</TabsTrigger>
+          </TabsList>
 
-          {/* General Settings */}
-          <TabsContent value="general">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              <Card className="col-span-1 md:col-span-2">
-                <CardHeader>
-                  <CardTitle>Company Details</CardTitle>
-                  <CardDescription>
-                    Update your company information and business details
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid gap-4">
-                    <div>
-                      <Label htmlFor="company-name">Company Name</Label>
-                      <Input 
-                        id="company-name" 
-                        value={companyName}
-                        onChange={(e) => setCompanyName(e.target.value)}
-                      />
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="tax-id">Tax ID (GSTIN)</Label>
-                      <Input 
-                        id="tax-id" 
-                        value={taxId}
-                        onChange={(e) => setTaxId(e.target.value)}
-                      />
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="company-email">Email</Label>
-                        <Input 
-                          id="company-email" 
-                          type="email" 
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                      </div>
-
-                      <div>
-                        <Label htmlFor="company-phone">Phone</Label>
-                        <Input 
-                          id="company-phone" 
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="company-website">Website</Label>
-                      <Input 
-                        id="company-website" 
-                        value={website}
-                        onChange={(e) => setWebsite(e.target.value)}
-                      />
-                    </div>
+          {/* General Settings Tab */}
+          <TabsContent value="general" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Company Information</CardTitle>
+                <CardDescription>
+                  Update your company details and contact information
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="company-name">Company Name</Label>
+                    <Input id="company-name" defaultValue="Nita Kitchen" />
                   </div>
-                </CardContent>
-                <CardFooter className="flex justify-between border-t pt-5">
-                  <Button variant="outline">Reset</Button>
-                  <Button>
-                    <Save className="mr-2 h-4 w-4" />
-                    Save Changes
-                  </Button>
-                </CardFooter>
-              </Card>
+                  <div className="space-y-2">
+                    <Label htmlFor="company-website">Website</Label>
+                    <Input id="company-website" defaultValue="www.nitakitchen.com" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="company-email">Email Address</Label>
+                    <Input id="company-email" defaultValue="contact@nitakitchen.com" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="company-phone">Phone Number</Label>
+                    <Input id="company-phone" defaultValue="+91 98765 43210" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="company-address">Registered Address</Label>
+                  <Textarea id="company-address" defaultValue="123 Business Park, Sector 5, Delhi, India - 110001" />
+                </div>
+              </CardContent>
+              <CardFooter className="justify-end">
+                <Button variant="outline" className="mr-2">Cancel</Button>
+                <Button>
+                  <SaveIcon className="mr-2 h-4 w-4" />
+                  Save Changes
+                </Button>
+              </CardFooter>
+            </Card>
 
-              <Card className="md:row-span-2">
-                <CardHeader>
-                  <CardTitle>System Preferences</CardTitle>
-                  <CardDescription>
-                    Configure system-wide settings
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="date-format">Date Format</Label>
-                      <Select defaultValue="dd-mm-yyyy">
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a format" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="dd-mm-yyyy">DD-MM-YYYY</SelectItem>
-                          <SelectItem value="mm-dd-yyyy">MM-DD-YYYY</SelectItem>
-                          <SelectItem value="yyyy-mm-dd">YYYY-MM-DD</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="timezone">Timezone</Label>
-                      <Select defaultValue="asia-kolkata">
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a timezone" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="asia-kolkata">Asia/Kolkata (IST)</SelectItem>
-                          <SelectItem value="utc">UTC</SelectItem>
-                          <SelectItem value="america-new_york">America/New_York (EST)</SelectItem>
-                          <SelectItem value="europe-london">Europe/London (GMT)</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="currency">Currency</Label>
-                      <Select defaultValue="inr">
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a currency" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="inr">Indian Rupee (₹)</SelectItem>
-                          <SelectItem value="usd">US Dollar ($)</SelectItem>
-                          <SelectItem value="eur">Euro (€)</SelectItem>
-                          <SelectItem value="gbp">British Pound (£)</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
+            <Card>
+              <CardHeader>
+                <CardTitle>User Interface Preferences</CardTitle>
+                <CardDescription>
+                  Customize how the application looks and behaves
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label className="font-medium">Date Format</Label>
+                    <p className="text-sm text-muted-foreground">
+                      Choose how dates are displayed throughout the application
+                    </p>
+                  </div>
+                  <Select defaultValue="dd-mm-yyyy">
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Date Format" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="dd-mm-yyyy">DD-MM-YYYY</SelectItem>
+                      <SelectItem value="mm-dd-yyyy">MM-DD-YYYY</SelectItem>
+                      <SelectItem value="yyyy-mm-dd">YYYY-MM-DD</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label className="font-medium">Time Format</Label>
+                    <p className="text-sm text-muted-foreground">
+                      Choose your preferred time format
+                    </p>
+                  </div>
+                  <RadioGroup defaultValue="12" className="flex items-center gap-4">
                     <div className="flex items-center space-x-2">
-                      <Switch id="auto-backup" defaultChecked />
-                      <Label htmlFor="auto-backup">Automatic backups</Label>
+                      <RadioGroupItem value="12" id="time-12" />
+                      <Label htmlFor="time-12">12 Hour</Label>
                     </div>
-
                     <div className="flex items-center space-x-2">
-                      <Switch id="analytics" defaultChecked />
-                      <Label htmlFor="analytics">Usage analytics</Label>
+                      <RadioGroupItem value="24" id="time-24" />
+                      <Label htmlFor="time-24">24 Hour</Label>
                     </div>
+                  </RadioGroup>
+                </div>
+                <Separator />
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label htmlFor="auto-refresh" className="font-medium">Auto Refresh</Label>
+                    <p className="text-sm text-muted-foreground">
+                      Automatically refresh order status and data
+                    </p>
                   </div>
-                </CardContent>
-                <CardFooter className="justify-between border-t pt-5">
-                  <Button variant="outline">Reset</Button>
-                  <Button>
-                    <Save className="mr-2 h-4 w-4" />
-                    Save Preferences
-                  </Button>
-                </CardFooter>
-              </Card>
-
-              <Card className="col-span-1 md:col-span-2">
-                <CardHeader>
-                  <CardTitle>Business Address</CardTitle>
-                  <CardDescription>
-                    Update your business address and location details
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid gap-4">
-                    <div>
-                      <Label htmlFor="address">Street Address</Label>
-                      <Textarea 
-                        id="address" 
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        rows={3}
-                      />
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="city">City</Label>
-                        <Input 
-                          id="city" 
-                          value={city}
-                          onChange={(e) => setCity(e.target.value)}
-                        />
-                      </div>
-
-                      <div>
-                        <Label htmlFor="state">State</Label>
-                        <Input 
-                          id="state" 
-                          value={state}
-                          onChange={(e) => setState(e.target.value)}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="pincode">Pincode</Label>
-                        <Input 
-                          id="pincode" 
-                          value={pincode}
-                          onChange={(e) => setPincode(e.target.value)}
-                        />
-                      </div>
-
-                      <div>
-                        <Label htmlFor="country">Country</Label>
-                        <Input 
-                          id="country" 
-                          value={country}
-                          onChange={(e) => setCountry(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="justify-between border-t pt-5">
-                  <Button variant="outline">Reset</Button>
-                  <Button>
-                    <MapPin className="mr-2 h-4 w-4" />
-                    Update Address
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
+                  <Switch id="auto-refresh" defaultChecked />
+                </div>
+              </CardContent>
+              <CardFooter className="justify-end">
+                <Button variant="outline" className="mr-2">Cancel</Button>
+                <Button>
+                  <SaveIcon className="mr-2 h-4 w-4" />
+                  Save Changes
+                </Button>
+              </CardFooter>
+            </Card>
           </TabsContent>
 
-          {/* Profile Settings */}
-          <TabsContent value="profile">
-            <div className="grid gap-6 md:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Personal Information</CardTitle>
-                  <CardDescription>
-                    Update your personal details and account information
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid gap-4">
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="first-name">First Name</Label>
-                        <Input id="first-name" defaultValue="Rajesh" />
-                      </div>
-                      
-                      <div>
-                        <Label htmlFor="last-name">Last Name</Label>
-                        <Input id="last-name" defaultValue="Kumar" />
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="display-name">Display Name</Label>
-                      <Input id="display-name" defaultValue="Rajesh K." />
-                      <p className="text-sm text-muted-foreground mt-1">
-                        This is how your name will appear to other users.
-                      </p>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="email">Email</Label>
-                      <Input id="email" type="email" defaultValue="rajesh@nitakitchen.com" />
-                    </div>
-
-                    <div>
-                      <Label htmlFor="phone">Phone</Label>
-                      <Input id="phone" defaultValue="+91 98765 43210" />
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="justify-between border-t pt-5">
-                  <Button variant="outline">Cancel</Button>
-                  <Button>
-                    <UserCog className="mr-2 h-4 w-4" />
-                    Update Profile
-                  </Button>
-                </CardFooter>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Change Password</CardTitle>
-                  <CardDescription>
-                    Update your password to keep your account secure
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid gap-4">
-                    <div>
-                      <Label htmlFor="current-password">Current Password</Label>
-                      <Input id="current-password" type="password" />
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="new-password">New Password</Label>
-                      <Input id="new-password" type="password" />
-                    </div>
-                    
-                    <div>
-                      <Label htmlFor="confirm-password">Confirm New Password</Label>
-                      <Input id="confirm-password" type="password" />
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="justify-between border-t pt-5">
-                  <Button variant="outline">Cancel</Button>
-                  <Button>
-                    <KeyIcon className="mr-2 h-4 w-4" />
-                    Change Password
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
-          </TabsContent>
-
-          {/* Notifications Settings */}
-          <TabsContent value="notifications">
+          {/* Notifications Tab */}
+          <TabsContent value="notifications" className="space-y-4">
             <Card>
               <CardHeader>
                 <CardTitle>Notification Preferences</CardTitle>
                 <CardDescription>
-                  Configure how and when you receive notifications
+                  Manage when and how you receive notifications
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-medium flex items-center">
+                      <Bell className="mr-2 h-4 w-4" />
+                      Order Notifications
+                    </h3>
+                    <Separator className="my-2" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label className="font-medium">New Orders</Label>
+                        <p className="text-sm text-muted-foreground">
+                          Notification when new orders are received
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="new-orders-email">Email</Label>
+                          <Switch id="new-orders-email" defaultChecked />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="new-orders-push">Push</Label>
+                          <Switch id="new-orders-push" defaultChecked />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label className="font-medium">Order Status Updates</Label>
+                        <p className="text-sm text-muted-foreground">
+                          Notification when an order status changes
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="order-updates-email">Email</Label>
+                          <Switch id="order-updates-email" defaultChecked />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="order-updates-push">Push</Label>
+                          <Switch id="order-updates-push" defaultChecked />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label className="font-medium">Return Requests</Label>
+                        <p className="text-sm text-muted-foreground">
+                          Notification when a customer requests a return
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="return-email">Email</Label>
+                          <Switch id="return-email" defaultChecked />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="return-push">Push</Label>
+                          <Switch id="return-push" defaultChecked />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-medium flex items-center">
+                      <BellRing className="mr-2 h-4 w-4" />
+                      System Notifications
+                    </h3>
+                    <Separator className="my-2" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label className="font-medium">Low Inventory Alerts</Label>
+                        <p className="text-sm text-muted-foreground">
+                          Notification when product inventory is low
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="inventory-email">Email</Label>
+                          <Switch id="inventory-email" defaultChecked />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="inventory-push">Push</Label>
+                          <Switch id="inventory-push" defaultChecked />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <Label className="font-medium">Courier Updates</Label>
+                        <p className="text-sm text-muted-foreground">
+                          Notification for shipping status changes
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="courier-email">Email</Label>
+                          <Switch id="courier-email" defaultChecked />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="courier-push">Push</Label>
+                          <Switch id="courier-push" defaultChecked />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter className="justify-end">
+                <Button variant="outline" className="mr-2">Cancel</Button>
+                <Button>
+                  <SaveIcon className="mr-2 h-4 w-4" />
+                  Save Changes
+                </Button>
+              </CardFooter>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Email Notification Settings</CardTitle>
+                <CardDescription>
+                  Configure who receives email notifications
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Email Recipients</Label>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge className="flex items-center gap-1 px-2 py-1">
+                        operations@nitakitchen.com
+                        <Button variant="ghost" size="icon" className="h-4 w-4 rounded-full">
+                          ×
+                        </Button>
+                      </Badge>
+                      <Badge className="flex items-center gap-1 px-2 py-1">
+                        shipping@nitakitchen.com
+                        <Button variant="ghost" size="icon" className="h-4 w-4 rounded-full">
+                          ×
+                        </Button>
+                      </Badge>
+                      <Button variant="outline" size="sm" className="h-7 gap-1">
+                        <PlusIcon className="h-3.5 w-3.5" />
+                        Add Email
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="daily-digest">Daily Digest Email</Label>
+                    <Select defaultValue="yes">
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select option" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="yes">Yes, send daily summary</SelectItem>
+                        <SelectItem value="weekdays">Only on weekdays</SelectItem>
+                        <SelectItem value="no">No, don't send</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <p className="text-sm text-muted-foreground">
+                      Receive a daily summary of all activity at 6:00 PM
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter className="justify-end">
+                <Button variant="outline" className="mr-2">Cancel</Button>
+                <Button>
+                  <SaveIcon className="mr-2 h-4 w-4" />
+                  Save Changes
+                </Button>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+
+          {/* Shipping Tab */}
+          <TabsContent value="shipping" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Shipping Partners</CardTitle>
+                <CardDescription>
+                  Manage your courier integrations and preferences
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                        <Truck className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium">Delhivery</h3>
+                        <p className="text-sm text-muted-foreground">
+                          API Integration Active
+                        </p>
+                      </div>
+                    </div>
+                    <Switch defaultChecked />
+                  </div>
+                  <Separator />
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                        <Truck className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium">BlueDart</h3>
+                        <p className="text-sm text-muted-foreground">
+                          API Integration Active
+                        </p>
+                      </div>
+                    </div>
+                    <Switch defaultChecked />
+                  </div>
+                  <Separator />
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                        <Truck className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium">DTDC</h3>
+                        <p className="text-sm text-muted-foreground">
+                          API Integration Active
+                        </p>
+                      </div>
+                    </div>
+                    <Switch defaultChecked />
+                  </div>
+                  <Separator />
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center">
+                        <Truck className="h-5 w-5 text-gray-400" />
+                      </div>
+                      <div>
+                        <h3 className="font-medium">Ecom Express</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Not Connected
+                        </p>
+                      </div>
+                    </div>
+                    <Button variant="outline" size="sm">
+                      <PlusIcon className="mr-2 h-4 w-4" />
+                      Connect
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter className="justify-end">
+                <Button>
+                  <Settings className="mr-2 h-4 w-4" />
+                  Configure Partners
+                </Button>
+              </CardFooter>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Default Shipping Settings</CardTitle>
+                <CardDescription>
+                  Configure default shipping options for new orders
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="default-courier">Default Courier</Label>
+                    <Select defaultValue="delhivery">
+                      <SelectTrigger id="default-courier">
+                        <SelectValue placeholder="Select courier" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="delhivery">Delhivery</SelectItem>
+                        <SelectItem value="bluedart">BlueDart</SelectItem>
+                        <SelectItem value="dtdc">DTDC</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="shipping-mode">Default Shipping Mode</Label>
+                    <Select defaultValue="surface">
+                      <SelectTrigger id="shipping-mode">
+                        <SelectValue placeholder="Select mode" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="surface">Surface</SelectItem>
+                        <SelectItem value="express">Express</SelectItem>
+                        <SelectItem value="premium">Premium</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="rto-address">Return to Origin Address</Label>
+                  <Textarea 
+                    id="rto-address" 
+                    defaultValue="Nita Kitchen, Warehouse #5, Industrial Area Phase 2, Delhi - 110001"
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label className="font-medium">Auto-generate AWB</Label>
+                    <p className="text-sm text-muted-foreground">
+                      Automatically generate AWB when order status is ready for shipping
+                    </p>
+                  </div>
+                  <Switch defaultChecked />
+                </div>
+              </CardContent>
+              <CardFooter className="justify-end">
+                <Button variant="outline" className="mr-2">Cancel</Button>
+                <Button>
+                  <SaveIcon className="mr-2 h-4 w-4" />
+                  Save Changes
+                </Button>
+              </CardFooter>
+            </Card>
+          </TabsContent>
+
+          {/* Billing Tab */}
+          <TabsContent value="billing" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Billing Information</CardTitle>
+                <CardDescription>
+                  Update your billing details and payment methods
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="billing-name">Billing Name</Label>
+                    <Input id="billing-name" defaultValue="Nita Kitchen Pvt Ltd" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="gstin">GSTIN</Label>
+                    <Input id="gstin" defaultValue="29ABCDE1234F1Z5" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="billing-address">Billing Address</Label>
+                  <Textarea 
+                    id="billing-address" 
+                    defaultValue="123 Business Park, Sector 5, Delhi, India - 110001"
+                  />
+                </div>
+
+                <h3 className="font-medium pt-2">Payment Methods</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between border rounded-md p-3">
+                    <div className="flex items-center gap-3">
+                      <CreditCard className="h-5 w-5 text-blue-600" />
+                      <div>
+                        <h4 className="font-medium">HDFC Credit Card</h4>
+                        <p className="text-sm text-muted-foreground">Ending in 4242</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge>Default</Badge>
+                      <Button variant="outline" size="sm">Edit</Button>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between border rounded-md p-3">
+                    <div className="flex items-center gap-3">
+                      <CreditCard className="h-5 w-5 text-gray-500" />
+                      <div>
+                        <h4 className="font-medium">ICICI Bank</h4>
+                        <p className="text-sm text-muted-foreground">Ending in 8888</p>
+                      </div>
+                    </div>
+                    <Button variant="outline" size="sm">Make Default</Button>
+                  </div>
+                  <div className="flex justify-center py-2">
+                    <Button variant="outline">
+                      <PlusIcon className="mr-2 h-4 w-4" />
+                      Add Payment Method
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Subscription Plan</CardTitle>
+                <CardDescription>
+                  Manage your subscription and usage details
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between border rounded-md p-4 bg-primary/5">
+                  <div>
+                    <h3 className="font-medium text-lg">Business Plan</h3>
+                    <p className="text-sm text-muted-foreground">
+                      ₹15,000/month, renews on May 11, 2025
+                    </p>
+                  </div>
+                  <Button variant="outline">Upgrade</Button>
+                </div>
+                
+                <div className="space-y-2">
+                  <h3 className="font-medium">Current Usage</h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm">Orders</p>
+                      <p className="text-sm font-medium">1,234 / 2,000</p>
+                    </div>
+                    <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
+                      <div className="bg-primary h-full rounded-full" style={{ width: '62%' }}></div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm">API Calls</p>
+                      <p className="text-sm font-medium">45,678 / 100,000</p>
+                    </div>
+                    <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
+                      <div className="bg-primary h-full rounded-full" style={{ width: '45%' }}></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex justify-between">
+                  <Button variant="outline">View Billing History</Button>
+                  <Button variant="ghost" className="text-red-500 hover:text-red-500 hover:bg-red-50">
+                    Cancel Subscription
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* API & Integrations Tab */}
+          <TabsContent value="api" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>API Keys</CardTitle>
+                <CardDescription>
+                  Manage your API keys for connecting external services
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between border rounded-md p-3">
                     <div>
-                      <h3 className="text-sm font-medium">Email Notifications</h3>
+                      <h4 className="font-medium">Production API Key</h4>
                       <p className="text-sm text-muted-foreground">
-                        Receive notifications via email
+                        Last used 2 hours ago
                       </p>
                     </div>
-                    <Switch 
-                      checked={emailNotifications} 
-                      onCheckedChange={setEmailNotifications}
-                    />
-                  </div>
-
-                  <Separator />
-
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="order-alerts" className="flex flex-col gap-1">
-                        <span>Order Alerts</span>
-                        <span className="font-normal text-xs text-muted-foreground">
-                          New orders, status updates, and cancellations
-                        </span>
-                      </Label>
-                      <Switch 
-                        id="order-alerts" 
-                        checked={orderAlerts} 
-                        onCheckedChange={setOrderAlerts}
-                        disabled={!emailNotifications}
+                    <div className="flex items-center gap-2">
+                      <Input 
+                        value="••••••••••••••••••••••••"
+                        className="w-48 font-mono"
+                        disabled
                       />
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="stock-alerts" className="flex flex-col gap-1">
-                        <span>Inventory Alerts</span>
-                        <span className="font-normal text-xs text-muted-foreground">
-                          Low stock notifications and inventory changes
-                        </span>
-                      </Label>
-                      <Switch 
-                        id="stock-alerts" 
-                        checked={stockAlerts} 
-                        onCheckedChange={setStockAlerts}
-                        disabled={!emailNotifications}
-                      />
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="returns-alerts" className="flex flex-col gap-1">
-                        <span>Returns & RTO Alerts</span>
-                        <span className="font-normal text-xs text-muted-foreground">
-                          Return requests and RTO notifications
-                        </span>
-                      </Label>
-                      <Switch 
-                        id="returns-alerts" 
-                        checked={returnsAlerts} 
-                        onCheckedChange={setReturnsAlerts}
-                        disabled={!emailNotifications}
-                      />
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="payment-alerts" className="flex flex-col gap-1">
-                        <span>Payment Alerts</span>
-                        <span className="font-normal text-xs text-muted-foreground">
-                          Payment confirmations and failures
-                        </span>
-                      </Label>
-                      <Switch 
-                        id="payment-alerts" 
-                        checked={paymentAlerts} 
-                        onCheckedChange={setPaymentAlerts}
-                        disabled={!emailNotifications}
-                      />
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="marketing-emails" className="flex flex-col gap-1">
-                        <span>Marketing & Updates</span>
-                        <span className="font-normal text-xs text-muted-foreground">
-                          Product updates and marketing communications
-                        </span>
-                      </Label>
-                      <Switch 
-                        id="marketing-emails" 
-                        checked={marketingEmails} 
-                        onCheckedChange={setMarketingEmails}
-                        disabled={!emailNotifications}
-                      />
+                      <Button variant="outline" size="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                      </Button>
                     </div>
                   </div>
+                  <div className="flex items-center justify-between border rounded-md p-3">
+                    <div>
+                      <h4 className="font-medium">Test API Key</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Last used 5 days ago
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Input 
+                        value="••••••••••••••••••••••••"
+                        className="w-48 font-mono"
+                        disabled
+                      />
+                      <Button variant="outline" size="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <Button variant="outline">
+                    <PlusIcon className="mr-2 h-4 w-4" />
+                    Generate New Key
+                  </Button>
+                  <Button variant="ghost">Revoke All Keys</Button>
+                </div>
+
+                <div className="pt-2">
+                  <h3 className="font-medium">API Documentation</h3>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Access our API documentation to integrate with our platform
+                  </p>
+                  <Button variant="link" className="px-0">
+                    View API Documentation
+                  </Button>
                 </div>
               </CardContent>
-              <CardFooter className="justify-between border-t pt-5">
-                <Button variant="outline">Reset to Defaults</Button>
-                <Button>
-                  <Save className="mr-2 h-4 w-4" />
-                  Save Preferences
-                </Button>
-              </CardFooter>
             </Card>
-          </TabsContent>
 
-          {/* Shipping Settings */}
-          <TabsContent value="shipping">
             <Card>
               <CardHeader>
-                <CardTitle>Shipping Settings</CardTitle>
+                <CardTitle>Connected Applications</CardTitle>
                 <CardDescription>
-                  Configure shipping options and courier integrations
+                  Manage third-party applications connected to your account
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <h3 className="text-sm font-medium">Preferred Couriers</h3>
-                  
-                  <div className="grid gap-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4">
-                        <TruckIcon className="h-5 w-5 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Delhivery</p>
-                          <p className="text-sm text-muted-foreground">Default for North & West India</p>
-                        </div>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between border rounded-md p-3">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                        <DatabaseIcon className="h-5 w-5 text-blue-600" />
                       </div>
-                      <Switch defaultChecked id="delhivery" />
-                    </div>
-                    
-                    <Separator />
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4">
-                        <TruckIcon className="h-5 w-5 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">BlueDart</p>
-                          <p className="text-sm text-muted-foreground">Default for South India</p>
-                        </div>
+                      <div>
+                        <h4 className="font-medium">Accounting System</h4>
+                        <p className="text-sm text-muted-foreground">Connected on Apr 1, 2025</p>
                       </div>
-                      <Switch defaultChecked id="bluedart" />
                     </div>
-                    
-                    <Separator />
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4">
-                        <TruckIcon className="h-5 w-5 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">DTDC</p>
-                          <p className="text-sm text-muted-foreground">Default for East India</p>
-                        </div>
-                      </div>
-                      <Switch id="dtdc" />
-                    </div>
-                    
-                    <Separator />
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4">
-                        <TruckIcon className="h-5 w-5 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Xpressbees</p>
-                          <p className="text-sm text-muted-foreground">Secondary option for all regions</p>
-                        </div>
-                      </div>
-                      <Switch defaultChecked id="xpressbees" />
-                    </div>
+                    <Button variant="ghost" className="text-red-500 hover:text-red-500 hover:bg-red-50">
+                      Disconnect
+                    </Button>
                   </div>
-                </div>
-
-                <Separator />
-
-                <div className="space-y-4">
-                  <h3 className="text-sm font-medium">Default Packaging Preferences</h3>
-                  
-                  <RadioGroup defaultValue="eco" className="space-y-3">
-                    <div className="flex items-center space-x-3 rounded-md border p-3">
-                      <RadioGroupItem value="eco" id="eco" />
-                      <Label htmlFor="eco" className="flex-1">
-                        <span className="font-medium">Eco-friendly Packaging</span>
-                        <span className="block text-sm text-muted-foreground">
-                          Biodegradable materials, minimal plastic
-                        </span>
-                      </Label>
-                      <span className="text-xs text-muted-foreground whitespace-nowrap">+₹15 per order</span>
-                    </div>
-                    
-                    <div className="flex items-center space-x-3 rounded-md border p-3">
-                      <RadioGroupItem value="standard" id="standard" />
-                      <Label htmlFor="standard" className="flex-1">
-                        <span className="font-medium">Standard Packaging</span>
-                        <span className="block text-sm text-muted-foreground">
-                          Regular cardboard boxes and bubble wrap
-                        </span>
-                      </Label>
-                      <span className="text-xs text-muted-foreground whitespace-nowrap">+₹5 per order</span>
-                    </div>
-                    
-                    <div className="flex items-center space-x-3 rounded-md border p-3">
-                      <RadioGroupItem value="premium" id="premium" />
-                      <Label htmlFor="premium" className="flex-1">
-                        <span className="font-medium">Premium Packaging</span>
-                        <span className="block text-sm text-muted-foreground">
-                          High-quality branded boxes and materials
-                        </span>
-                      </Label>
-                      <span className="text-xs text-muted-foreground whitespace-nowrap">+₹25 per order</span>
-                    </div>
-                  </RadioGroup>
-                </div>
-              </CardContent>
-              <CardFooter className="justify-between border-t pt-5">
-                <Button variant="outline">Reset to Defaults</Button>
-                <Button>
-                  <Save className="mr-2 h-4 w-4" />
-                  Save Shipping Settings
-                </Button>
-              </CardFooter>
-            </Card>
-          </TabsContent>
-
-          {/* Payment Settings */}
-          <TabsContent value="payment">
-            <Card>
-              <CardHeader>
-                <CardTitle>Payment Methods</CardTitle>
-                <CardDescription>
-                  Manage your payment methods and billing preferences
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-4">
-                  <h3 className="text-sm font-medium">Connected Payment Gateways</h3>
-                  
-                  <div className="grid gap-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4">
-                        <CreditCard className="h-5 w-5 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">Razorpay</p>
-                          <p className="text-sm text-muted-foreground">Connected on Apr 10, 2025</p>
-                        </div>
+                  <div className="flex items-center justify-between border rounded-md p-3">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
+                        <PhoneIcon className="h-5 w-5 text-green-600" />
                       </div>
-                      <Badge className="bg-green-100 text-green-800 hover:bg-green-100">Active</Badge>
-                    </div>
-                    
-                    <Separator />
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4">
-                        <CreditCard className="h-5 w-5 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm font-medium">PayU</p>
-                          <p className="text-sm text-muted-foreground">Connected on Feb 23, 2025</p>
-                        </div>
+                      <div>
+                        <h4 className="font-medium">SMS Gateway</h4>
+                        <p className="text-sm text-muted-foreground">Connected on Mar 15, 2025</p>
                       </div>
-                      <Badge variant="outline" className="border-gray-500 text-gray-800">Inactive</Badge>
                     </div>
-                    
-                    <Separator />
-                    
-                    <Button variant="outline" className="flex items-center gap-2">
-                      <PlusIcon className="h-4 w-4" />
-                      Add Payment Gateway
+                    <Button variant="ghost" className="text-red-500 hover:text-red-500 hover:bg-red-50">
+                      Disconnect
                     </Button>
                   </div>
                 </div>
 
-                <Separator />
-
-                <div className="space-y-4">
-                  <h3 className="text-sm font-medium">Supported Payment Methods</h3>
-                  
-                  <div className="grid gap-4">
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="enable-cards">
-                        Credit/Debit Cards
-                      </Label>
-                      <Switch defaultChecked id="enable-cards" />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="enable-upi">
-                        UPI
-                      </Label>
-                      <Switch defaultChecked id="enable-upi" />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="enable-netbanking">
-                        Netbanking
-                      </Label>
-                      <Switch defaultChecked id="enable-netbanking" />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="enable-wallet">
-                        Wallets
-                      </Label>
-                      <Switch defaultChecked id="enable-wallet" />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="enable-cod">
-                        Cash on Delivery
-                      </Label>
-                      <Switch id="enable-cod" />
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="enable-bnpl">
-                        Buy Now Pay Later
-                      </Label>
-                      <Switch id="enable-bnpl" />
-                    </div>
-                  </div>
+                <div className="flex justify-center py-2">
+                  <Button>
+                    <PlusIcon className="mr-2 h-4 w-4" />
+                    Connect Application
+                  </Button>
                 </div>
               </CardContent>
-              <CardFooter className="justify-between border-t pt-5">
-                <Button variant="outline">Reset</Button>
-                <Button>
-                  <Save className="mr-2 h-4 w-4" />
-                  Save Payment Settings
-                </Button>
-              </CardFooter>
             </Card>
-          </TabsContent>
-
-          {/* Security Settings */}
-          <TabsContent value="security">
-            <div className="grid gap-6 md:grid-cols-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Login Security</CardTitle>
-                  <CardDescription>
-                    Configure authentication and security options
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="text-sm font-medium">Two-Factor Authentication</h3>
-                        <p className="text-sm text-muted-foreground">
-                          Add an extra layer of security to your account
-                        </p>
-                      </div>
-                      <Switch id="enable-2fa" />
-                    </div>
-                    
-                    <Separator />
-                    
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="text-sm font-medium">Session Timeout</h3>
-                        <p className="text-sm text-muted-foreground">
-                          Automatically log out after a period of inactivity
-                        </p>
-                      </div>
-                      <Select defaultValue="30">
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Select timeout" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="15">15 minutes</SelectItem>
-                          <SelectItem value="30">30 minutes</SelectItem>
-                          <SelectItem value="60">1 hour</SelectItem>
-                          <SelectItem value="120">2 hours</SelectItem>
-                          <SelectItem value="never">Never timeout</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <Separator />
-                    
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="text-sm font-medium">Failed Login Attempts</h3>
-                        <p className="text-sm text-muted-foreground">
-                          Lock account after multiple failed login attempts
-                        </p>
-                      </div>
-                      <Select defaultValue="5">
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Select limit" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="3">3 attempts</SelectItem>
-                          <SelectItem value="5">5 attempts</SelectItem>
-                          <SelectItem value="10">10 attempts</SelectItem>
-                          <SelectItem value="disabled">Disabled</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="justify-between border-t pt-5">
-                  <Button variant="outline">Reset</Button>
-                  <Button>
-                    <Save className="mr-2 h-4 w-4" />
-                    Save Security Settings
-                  </Button>
-                </CardFooter>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Password Policy</CardTitle>
-                  <CardDescription>
-                    Set requirements for user passwords
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="min-length" className="text-sm">
-                        Minimum Password Length
-                      </Label>
-                      <Select defaultValue="8">
-                        <SelectTrigger className="w-[100px]">
-                          <SelectValue placeholder="Length" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="6">6</SelectItem>
-                          <SelectItem value="8">8</SelectItem>
-                          <SelectItem value="10">10</SelectItem>
-                          <SelectItem value="12">12</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    
-                    <Separator />
-                    
-                    <div className="space-y-2">
-                      <h3 className="text-sm font-medium">Password Requirements</h3>
-                      
-                      <div className="flex items-center space-x-2">
-                        <Switch id="require-uppercase" defaultChecked />
-                        <Label htmlFor="require-uppercase">Require uppercase letters</Label>
-                      </div>
-                      
-                      <div className="flex items-center space-x-2">
-                        <Switch id="require-numbers" defaultChecked />
-                        <Label htmlFor="require-numbers">Require numbers</Label>
-                      </div>
-                      
-                      <div className="flex items-center space-x-2">
-                        <Switch id="require-special" defaultChecked />
-                        <Label htmlFor="require-special">Require special characters</Label>
-                      </div>
-                      
-                      <div className="flex items-center space-x-2">
-                        <Switch id="prevent-reuse" defaultChecked />
-                        <Label htmlFor="prevent-reuse">Prevent password reuse (last 3)</Label>
-                      </div>
-                    </div>
-                    
-                    <Separator />
-                    
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="password-expiry" className="text-sm">
-                        Password Expiry
-                      </Label>
-                      <Select defaultValue="90">
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue placeholder="Select expiry" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="30">30 days</SelectItem>
-                          <SelectItem value="60">60 days</SelectItem>
-                          <SelectItem value="90">90 days</SelectItem>
-                          <SelectItem value="never">Never expire</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="justify-between border-t pt-5">
-                  <Button variant="outline">Reset to Defaults</Button>
-                  <Button>
-                    <Save className="mr-2 h-4 w-4" />
-                    Save Policy
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
           </TabsContent>
         </Tabs>
       </div>
