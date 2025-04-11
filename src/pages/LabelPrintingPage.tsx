@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Layout } from "@/components/layout";
 import { Button } from "@/components/ui/button";
@@ -25,7 +24,6 @@ import { PrintSettings } from "@/components/labels/print-settings";
 import { LabelPreview } from "@/components/labels/label-preview";
 import { BatchSettings } from "@/components/labels/batch-settings";
 
-// Mock data for orders that need labels
 const mockLabelOrders = [
   { 
     id: "OD-1023759",
@@ -104,14 +102,12 @@ const LabelPrintingPage = () => {
     }
   };
 
-  // Filter orders based on search query, courier, and date
   const filteredOrders = mockLabelOrders.filter(order => {
     const matchesSearch = order.id.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           order.customer.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCourier = courierFilter === "all" || 
                           (courierFilter === "assigned" && order.courier) ||
                           (courierFilter === "unassigned" && !order.courier);
-    // For simplicity, we're not implementing actual date filtering logic
     const matchesDate = dateFilter === "all" || 
                         (dateFilter === "today" && order.created.includes("2025-04-09"));
     
