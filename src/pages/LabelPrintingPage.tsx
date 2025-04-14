@@ -91,6 +91,8 @@ const LabelPrintingPage = () => {
   const [selectedOrders, setSelectedOrders] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [courierFilter, setCourierFilter] = useState("all");
+  const [labelFormat, setLabelFormat] = useState("a4");
+  const [selectedOrder, setSelectedOrder] = useState(mockOrdersForLabels[0]);
 
   // Get unique couriers for filter
   const couriers = Array.from(new Set(mockOrdersForLabels.map(order => order.courier)));
@@ -112,6 +114,11 @@ const LabelPrintingPage = () => {
       setSelectedOrders(selectedOrders.filter(id => id !== orderId));
     } else {
       setSelectedOrders([...selectedOrders, orderId]);
+      // Set selected order for preview
+      const order = mockOrdersForLabels.find(o => o.id === orderId);
+      if (order) {
+        setSelectedOrder(order);
+      }
     }
   };
 
@@ -121,6 +128,19 @@ const LabelPrintingPage = () => {
       setSelectedOrders([]);
     } else {
       setSelectedOrders(filteredOrders.map(order => order.id));
+    }
+  };
+
+  // Handle format change
+  const handleFormatChange = (format: string) => {
+    setLabelFormat(format);
+  };
+
+  // View order details
+  const viewOrderDetails = (orderId: string) => {
+    const order = mockOrdersForLabels.find(o => o.id === orderId);
+    if (order) {
+      setSelectedOrder(order);
     }
   };
 
@@ -201,8 +221,9 @@ const LabelPrintingPage = () => {
                       <OrderLabelList 
                         orders={filteredOrders}
                         selectedOrders={selectedOrders}
-                        onToggleOrder={toggleOrderSelection}
+                        onSelectOrder={toggleOrderSelection}
                         onSelectAll={selectAllOrders}
+                        onViewOrder={viewOrderDetails}
                       />
                     </div>
                   </CardContent>
@@ -210,32 +231,22 @@ const LabelPrintingPage = () => {
               </div>
 
               <div className="space-y-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Batch Settings</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <BatchSettings selectedCount={selectedOrders.length} />
-                  </CardContent>
-                </Card>
+                <BatchSettings 
+                  selectedCount={selectedOrders.length}
+                  labelFormat={labelFormat}
+                  onFormatChange={handleFormatChange}
+                />
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Print Settings</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <PrintSettings />
-                  </CardContent>
-                </Card>
+                <PrintSettings 
+                  labelFormat={labelFormat}
+                  onFormatChange={handleFormatChange}
+                />
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Label Preview</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <LabelPreview />
-                  </CardContent>
-                </Card>
+                <LabelPreview 
+                  order={selectedOrder}
+                  labelFormat={labelFormat}
+                  onFormatChange={handleFormatChange}
+                />
               </div>
             </div>
           </TabsContent>
