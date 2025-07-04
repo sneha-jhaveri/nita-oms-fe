@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 
-export const publicBaseUrl = "https://chvs4xgl-3000.inc1.devtunnels.ms/api";
+export const publicBaseUrl = "https://chvs4xgl-3000.inc1.devtunnels.ms";
 
 const axiosInstance = axios.create({
   baseURL: publicBaseUrl,
@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config: any) => {
-    const token = localStorage.getItem("token"); 
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers = {
         ...config.headers,
