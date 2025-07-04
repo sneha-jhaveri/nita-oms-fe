@@ -20,7 +20,7 @@ export function MainNav({ className, user, ...props }: MainNavProps) {
   const navItems: NavItem[] = [
     {
       name: "Dashboard",
-      href: "/",
+      href: "/dashboard",
       roles: ["admin", "dispatcher", "finance", "cs_agent", "rto_agent", "brand_user", "label_printer"],
     },
     {

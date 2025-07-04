@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Layout } from "@/components/layout";
 import { Link, useLocation } from "react-router-dom";
@@ -23,7 +22,7 @@ const NotFound = () => {
           The page you are looking for doesn't exist or has been moved.
         </p>
         <Button asChild>
-          <Link to="/">Return to Dashboard</Link>
+          <Link to="/dashboard">Return to Dashboard</Link>
         </Button>
       </div>
     </Layout>

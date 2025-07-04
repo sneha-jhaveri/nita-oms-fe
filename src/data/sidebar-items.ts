@@ -17,7 +17,7 @@ import { SidebarItem } from "@/types/sidebar";
 export const sidebarItems: SidebarItem[] = [
   {
     name: "Dashboard",
-    href: "/",
+    href: "/dashboard",
     icon: HomeIcon,
     roles: [
       "admin",
