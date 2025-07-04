@@ -1,9 +1,8 @@
-
 import { Layout } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { 
+import {
   ArrowRight,
   CalendarIcon,
   Download,
@@ -15,11 +14,17 @@ import {
   TrendingUp,
   TrendingDown,
   FileDown,
-  RefreshCw
+  RefreshCw,
 } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useState } from "react";
-import { 
+import {
   ResponsiveContainer,
   LineChart as RechartsLineChart,
   Line,
@@ -32,70 +37,70 @@ import {
   Legend,
   PieChart as RechartsPieChart,
   Pie,
-  Cell
-} from 'recharts';
+  Cell,
+} from "recharts";
 
 // Mock data for charts
 const salesData = [
-  { name: 'Apr 1', sales: 34000, returns: 2300, refunds: 1200 },
-  { name: 'Apr 2', sales: 42000, returns: 1800, refunds: 900 },
-  { name: 'Apr 3', sales: 38000, returns: 2100, refunds: 1100 },
-  { name: 'Apr 4', sales: 29000, returns: 1500, refunds: 800 },
-  { name: 'Apr 5', sales: 31000, returns: 1700, refunds: 950 },
-  { name: 'Apr 6', sales: 45000, returns: 2400, refunds: 1300 },
-  { name: 'Apr 7', sales: 48000, returns: 2600, refunds: 1400 },
+  { name: "Apr 1", sales: 34000, returns: 2300, refunds: 1200 },
+  { name: "Apr 2", sales: 42000, returns: 1800, refunds: 900 },
+  { name: "Apr 3", sales: 38000, returns: 2100, refunds: 1100 },
+  { name: "Apr 4", sales: 29000, returns: 1500, refunds: 800 },
+  { name: "Apr 5", sales: 31000, returns: 1700, refunds: 950 },
+  { name: "Apr 6", sales: 45000, returns: 2400, refunds: 1300 },
+  { name: "Apr 7", sales: 48000, returns: 2600, refunds: 1400 },
 ];
 
 const couriersData = [
-  { name: 'Delhivery', value: 540 },
-  { name: 'DTDC', value: 320 },
-  { name: 'BlueDart', value: 280 },
-  { name: 'Xpressbees', value: 210 },
-  { name: 'Ecom Express', value: 150 },
+  { name: "Delhivery", value: 540 },
+  { name: "DTDC", value: 320 },
+  { name: "BlueDart", value: 280 },
+  { name: "Xpressbees", value: 210 },
+  { name: "Ecom Express", value: 150 },
 ];
 
 const productsData = [
-  { name: 'Pressure Cooker', sales: 180, returns: 12 },
-  { name: 'Steel Kadhai', sales: 150, returns: 8 },
-  { name: 'Non-stick Tawa', sales: 130, returns: 10 },
-  { name: 'Kitchen Knife Set', sales: 100, returns: 5 },
-  { name: 'Steel Bowl Set', sales: 90, returns: 4 },
+  { name: "Pressure Cooker", sales: 180, returns: 12 },
+  { name: "Steel Kadhai", sales: 150, returns: 8 },
+  { name: "Non-stick Tawa", sales: 130, returns: 10 },
+  { name: "Kitchen Knife Set", sales: 100, returns: 5 },
+  { name: "Steel Bowl Set", sales: 90, returns: 4 },
 ];
 
 // Mock available reports
 const availableReports = [
   {
-    id: 'sales_summary',
-    name: 'Sales Summary Report',
-    description: 'Daily, weekly and monthly revenue breakdown',
+    id: "sales_summary",
+    name: "Sales Summary Report",
+    description: "Daily, weekly and monthly revenue breakdown",
     icon: FileBarChart,
-    lastRun: '2025-04-11',
+    lastRun: "2025-04-11",
   },
   {
-    id: 'returns_analysis',
-    name: 'Returns Analysis',
-    description: 'Root causes and financial impact of returns',
+    id: "returns_analysis",
+    name: "Returns Analysis",
+    description: "Root causes and financial impact of returns",
     icon: TrendingDown,
-    lastRun: '2025-04-10',
+    lastRun: "2025-04-10",
   },
   {
-    id: 'inventory_stock',
-    name: 'Inventory Stock Report',
-    description: 'Current inventory levels and valuation',
+    id: "inventory_stock",
+    name: "Inventory Stock Report",
+    description: "Current inventory levels and valuation",
     icon: FileText,
-    lastRun: '2025-04-11',
+    lastRun: "2025-04-11",
   },
   {
-    id: 'courier_perf',
-    name: 'Courier Performance',
-    description: 'Delivery times and RTO rates by courier',
+    id: "courier_perf",
+    name: "Courier Performance",
+    description: "Delivery times and RTO rates by courier",
     icon: TrendingUp,
-    lastRun: '2025-04-09',
+    lastRun: "2025-04-09",
   },
 ];
 
 // Colors for pie chart
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#A569BD'];
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A569BD"];
 
 const ReportsPage = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -112,10 +117,7 @@ const ReportsPage = () => {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <Select 
-              value={timeRange} 
-              onValueChange={setTimeRange}
-            >
+            <Select value={timeRange} onValueChange={setTimeRange}>
               <SelectTrigger className="w-[150px]">
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 <SelectValue placeholder="Time Range" />
@@ -157,15 +159,19 @@ const ReportsPage = () => {
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+                  <CardTitle className="text-sm font-medium">
+                    Total Revenue
+                  </CardTitle>
                   <TrendingUp className="h-4 w-4 text-green-500" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">₹2,45,350</div>
-                  <p className="text-xs text-muted-foreground">+12% from last period</p>
+                  <p className="text-xs text-muted-foreground">
+                    +12% from last period
+                  </p>
                 </CardContent>
               </Card>
-              
+
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Orders</CardTitle>
@@ -173,10 +179,12 @@ const ReportsPage = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">1,234</div>
-                  <p className="text-xs text-muted-foreground">+18% from last period</p>
+                  <p className="text-xs text-muted-foreground">
+                    +18% from last period
+                  </p>
                 </CardContent>
               </Card>
-              
+
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Returns</CardTitle>
@@ -184,18 +192,24 @@ const ReportsPage = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">87</div>
-                  <p className="text-xs text-muted-foreground">-3% from last period</p>
+                  <p className="text-xs text-muted-foreground">
+                    -3% from last period
+                  </p>
                 </CardContent>
               </Card>
-              
+
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Return Rate</CardTitle>
+                  <CardTitle className="text-sm font-medium">
+                    Return Rate
+                  </CardTitle>
                   <PieChart className="h-4 w-4 text-amber-500" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">7.1%</div>
-                  <p className="text-xs text-muted-foreground">-1.2% from last period</p>
+                  <p className="text-xs text-muted-foreground">
+                    -1.2% from last period
+                  </p>
                 </CardContent>
               </Card>
             </div>
@@ -221,11 +235,11 @@ const ReportsPage = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line 
-                      type="monotone" 
-                      dataKey="sales" 
-                      stroke="#8884d8" 
-                      activeDot={{ r: 8 }} 
+                    <Line
+                      type="monotone"
+                      dataKey="sales"
+                      stroke="#8884d8"
+                      activeDot={{ r: 8 }}
                     />
                     <Line type="monotone" dataKey="returns" stroke="#ff7300" />
                     <Line type="monotone" dataKey="refunds" stroke="#ff0000" />
@@ -252,10 +266,15 @@ const ReportsPage = () => {
                         outerRadius={80}
                         fill="#8884d8"
                         dataKey="value"
-                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                        label={({ name, percent }) =>
+                          `${name}: ${(percent * 100).toFixed(0)}%`
+                        }
                       >
                         {couriersData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[index % COLORS.length]}
+                          />
                         ))}
                       </Pie>
                       <Tooltip />
@@ -334,7 +353,8 @@ const ReportsPage = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Create a new custom report with your selected parameters and filters
+                    Create a new custom report with your selected parameters and
+                    filters
                   </p>
                   <Button className="w-full" variant="outline">
                     <ArrowRight className="mr-2 h-4 w-4" />
@@ -355,7 +375,9 @@ const ReportsPage = () => {
                 <div className="flex h-40 items-center justify-center rounded-md border border-dashed">
                   <div className="text-center">
                     <CalendarIcon className="mx-auto h-10 w-10 text-muted-foreground" />
-                    <h3 className="mt-2 text-lg font-medium">No scheduled reports</h3>
+                    <h3 className="mt-2 text-lg font-medium">
+                      No scheduled reports
+                    </h3>
                     <p className="mt-1 text-sm text-muted-foreground">
                       Schedule reports to be automatically generated and emailed
                     </p>
