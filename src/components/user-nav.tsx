@@ -1,4 +1,3 @@
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
 import { LogOut, Settings, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface UserNavProps {
   user: {
@@ -24,7 +24,7 @@ interface UserNavProps {
 
 export function UserNav({ user }: UserNavProps) {
   const { toast } = useToast();
-  
+
   const handleLogout = () => {
     toast({
       title: "Logged out",
@@ -38,7 +38,9 @@ export function UserNav({ user }: UserNavProps) {
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
             <AvatarImage src={user.avatarUrl} alt={user.name} />
-            <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+            <AvatarFallback>
+              {user.name.slice(0, 2).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -57,8 +59,10 @@ export function UserNav({ user }: UserNavProps) {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
+            <Link to="/profile" className="flex items-center">
+              <User className="mr-2 h-4 w-4" />
+              <span>Profile</span>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Settings className="mr-2 h-4 w-4" />
@@ -67,8 +71,10 @@ export function UserNav({ user }: UserNavProps) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogout}>
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
+          <Link to="/login" className="flex items-center">
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>Log out</span>
+          </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

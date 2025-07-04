@@ -1,4 +1,3 @@
-
 import {
   ArchiveIcon,
   BarChart3Icon,
@@ -6,6 +5,7 @@ import {
   ClipboardCheckIcon,
   HomeIcon,
   Package2Icon,
+  PlugIcon,
   ReceiptIcon,
   RefreshCwIcon,
   Settings2Icon,
@@ -19,13 +19,28 @@ export const sidebarItems: SidebarItem[] = [
     name: "Dashboard",
     href: "/",
     icon: HomeIcon,
-    roles: ["admin", "dispatcher", "finance", "cs_agent", "rto_agent", "brand_user", "label_printer"],
+    roles: [
+      "admin",
+      "dispatcher",
+      "finance",
+      "cs_agent",
+      "rto_agent",
+      "brand_user",
+      "label_printer",
+    ],
   },
   {
     name: "Orders",
     href: "/orders",
     icon: ClipboardCheckIcon,
-    roles: ["admin", "dispatcher", "finance", "cs_agent", "rto_agent", "brand_user"],
+    roles: [
+      "admin",
+      "dispatcher",
+      "finance",
+      "cs_agent",
+      "rto_agent",
+      "brand_user",
+    ],
   },
   {
     name: "Returns & RTO",
@@ -62,6 +77,12 @@ export const sidebarItems: SidebarItem[] = [
     href: "/reports",
     icon: BarChart3Icon,
     roles: ["admin", "finance", "brand_user"],
+  },
+  {
+    name: "Integrations",
+    href: "/integrations",
+    icon: PlugIcon, // Optional: import from lucide-react
+    roles: ["admin"], // adjust as needed
   },
   {
     name: "Brands",

@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -17,6 +16,12 @@ import ReportsPage from "./pages/ReportsPage";
 import BrandsPage from "./pages/BrandsPage";
 import UsersPage from "./pages/UsersPage";
 import SettingsPage from "./pages/SettingsPage";
+import IntegrationsPage from "./pages/IntegrationsPage";
+import LoginPage from "./pages/Login";
+import SignupPage from "./pages/SignUp";
+import ProfilePage from "./pages/Profile";
+import ShopifyManualConnectPage from "./pages/Shopify/ShopifyManualConnectPage";
+import ShopifyAdvancedConfigPage from "./pages/Shopify/ShopifyAdvancedConfigPage";
 
 const queryClient = new QueryClient();
 
@@ -27,7 +32,11 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/dashboard" element={<Index />} />
           <Route path="/orders" element={<OrdersPage />} />
           <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
           <Route path="/returns" element={<ReturnsPage />} />
@@ -37,6 +46,15 @@ const App = () => (
           <Route path="/reconciliation" element={<ReconciliationPage />} />
           <Route path="/reports" element={<ReportsPage />} />
           <Route path="/brands" element={<BrandsPage />} />
+          <Route
+            path="/shopify/manual"
+            element={<ShopifyManualConnectPage />}
+          />
+          <Route
+            path="/shopify/advanced-config"
+            element={<ShopifyAdvancedConfigPage />}
+          />
+          <Route path="/integrations" element={<IntegrationsPage />} />
           <Route path="/users" element={<UsersPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="*" element={<NotFound />} />
