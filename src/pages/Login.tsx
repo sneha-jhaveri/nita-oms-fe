@@ -18,7 +18,7 @@ const LoginPage = () => {
     try {
       const res = await login({ email, password });
       localStorage.setItem("token", res.data.token);
-      window.location.href = "/dashboard";
+      navigate("/dashboard");
     } catch (err) {
       console.error(err);
     } finally {

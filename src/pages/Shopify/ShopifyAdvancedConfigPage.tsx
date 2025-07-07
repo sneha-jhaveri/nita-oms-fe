@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   createAdvancedConfig,
   updateAdvancedConfig,
+  manualSyncStore,
+  handleSyncConfigChange,
 } from "@/api/services/shopify";
 import { Layout } from "@/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,6 +16,7 @@ import { Switch } from "@/components/ui/switch";
 
 const defaultValues = {
   storeId: "",
+  orgId: "", // Added to support config change trigger
   previousDaysToSync: 7,
   syncPreviousOrders: true,
   syncNewOrders: true,
@@ -122,6 +125,17 @@ const ShopifyAdvancedConfigPage = () => {
               )}
 
               <div>
+                <Label htmlFor="orgId">Organization ID</Label>
+                <Input
+                  id="orgId"
+                  name="orgId"
+                  value={form.orgId}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div>
                 <Label htmlFor="previousDaysToSync">
                   Previous Days To Sync
                 </Label>
@@ -135,7 +149,6 @@ const ShopifyAdvancedConfigPage = () => {
                 />
               </div>
 
-              {/* 🧩 Switches in Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {toggleFields.map((key) => (
                   <div key={key} className="flex items-center gap-3">
@@ -198,6 +211,49 @@ const ShopifyAdvancedConfigPage = () => {
                     : "Create Config"}
                 </Button>
               </div>
+
+              {/* Manual Sync + Config Change */}
+              {configId && (
+                <div className="space-y-4 pt-6 border-t mt-6">
+                  <h3 className="text-lg font-medium">Sync Actions</h3>
+                  <div className="flex gap-4">
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      onClick={async () => {
+                        try {
+                          await manualSyncStore(form.storeId);
+                          alert("Manual sync triggered successfully.");
+                        } catch (err) {
+                          console.error(err);
+                          alert("Manual sync failed.");
+                        }
+                      }}
+                    >
+                      Trigger Manual Sync
+                    </Button>
+
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      onClick={async () => {
+                        try {
+                          await handleSyncConfigChange({
+                            configId,
+                            orgId: form.orgId,
+                          });
+                          alert("Sync config change handled.");
+                        } catch (err) {
+                          console.error(err);
+                          alert("Failed to update sync config.");
+                        }
+                      }}
+                    >
+                      Trigger Sync Config Change
+                    </Button>
+                  </div>
+                </div>
+              )}
             </form>
           </CardContent>
         </Card>

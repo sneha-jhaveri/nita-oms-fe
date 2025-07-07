@@ -22,6 +22,7 @@ import SignupPage from "./pages/SignUp";
 import ProfilePage from "./pages/Profile";
 import ShopifyManualConnectPage from "./pages/Shopify/ShopifyManualConnectPage";
 import ShopifyAdvancedConfigPage from "./pages/Shopify/ShopifyAdvancedConfigPage";
+import ShopifyOAuthCallbackPage from "./pages/Shopify/ShopifyOAuthCallbackPage";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +54,10 @@ const App = () => (
           <Route
             path="/shopify/advanced-config"
             element={<ShopifyAdvancedConfigPage />}
+          />
+          <Route
+            path="/shopify/callback"
+            element={<ShopifyOAuthCallbackPage />}
           />
           <Route path="/integrations" element={<IntegrationsPage />} />
           <Route path="/users" element={<UsersPage />} />

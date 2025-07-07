@@ -1,8 +1,9 @@
 import { Layout } from "@/components/layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuth } from "@/context/AuthContext";
 
 const ProfilePage = () => {
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const { user } = useAuth();
 
   return (
     <Layout>
