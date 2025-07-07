@@ -1,4 +1,3 @@
-
 // import { useState } from "react";
 // import { Layout } from "@/components/layout";
 // import { Button } from "@/components/ui/button";
@@ -136,20 +135,20 @@
 //   const [roleFilter, setRoleFilter] = useState("all");
 //   const [statusFilter, setStatusFilter] = useState("all");
 //   const [brandFilter, setBrandFilter] = useState("all");
-  
+
 //   // Get unique brands for filter
 //   const brands = Array.from(new Set(mockUsers.map(user => user.brand)));
-  
+
 //   // Filter users based on search and filters
 //   const filteredUsers = mockUsers.filter(user => {
 //     const matchesSearch =
 //       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
 //       user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
 //     const matchesRole = roleFilter === "all" || user.role === roleFilter;
 //     const matchesStatus = statusFilter === "all" || user.status === statusFilter;
 //     const matchesBrand = brandFilter === "all" || user.brand === brandFilter;
-    
+
 //     return matchesSearch && matchesRole && matchesStatus && matchesBrand;
 //   });
 
@@ -225,7 +224,7 @@
 //                     onChange={(e) => setSearchTerm(e.target.value)}
 //                   />
 //                 </div>
-                
+
 //                 <Select
 //                   value={roleFilter}
 //                   onValueChange={setRoleFilter}
@@ -244,7 +243,7 @@
 //                     <SelectItem value="label_printer">Label Printer</SelectItem>
 //                   </SelectContent>
 //                 </Select>
-                
+
 //                 <Select
 //                   value={statusFilter}
 //                   onValueChange={setStatusFilter}
@@ -259,7 +258,7 @@
 //                     <SelectItem value="inactive">Inactive</SelectItem>
 //                   </SelectContent>
 //                 </Select>
-                
+
 //                 <Select
 //                   value={brandFilter}
 //                   onValueChange={setBrandFilter}
@@ -367,7 +366,7 @@
 //                       </TableCell>
 //                     </TableRow>
 //                   ))}
-                  
+
 //                   {filteredUsers.length === 0 && (
 //                     <TableRow>
 //                       <TableCell colSpan={7} className="h-24 text-center">
@@ -387,7 +386,6 @@
 
 // export default UsersPage;
 
-
 import { useEffect, useState } from "react";
 import { Layout } from "@/components/layout";
 import { Button } from "@/components/ui/button";
@@ -402,7 +400,6 @@ import { useAuth } from "@/context/AuthContext";
 import { UserData } from "@/types/user";
 import { UserTable } from "@/components/users/UserTable";
 import { UserFormModal } from "@/components/users/UserFormModal";
-
 
 const UsersPage = () => {
   const { user } = useAuth();
@@ -431,8 +428,16 @@ const UsersPage = () => {
   const handleCreateUser = async (formData: Partial<UserData>) => {
     try {
       // Ensure all required fields are present
-      const { email, password, firstName, lastName, phoneNumber, role } = formData;
-      if (!email || !password || !firstName || !lastName || !phoneNumber || !role) {
+      const { email, password, firstName, lastName, phoneNumber, role } =
+        formData;
+      if (
+        !email ||
+        !password ||
+        !firstName ||
+        !lastName ||
+        !phoneNumber ||
+        !role
+      ) {
         throw new Error("Missing required user fields");
       }
       const payload = {

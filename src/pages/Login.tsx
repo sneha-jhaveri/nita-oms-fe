@@ -17,7 +17,8 @@ const LoginPage = () => {
     setLoading(true);
     try {
       const res = await login({ email, password });
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", res.data.data.accessToken);
+      console.log("Login successful:", res.data.data.accessToken);
       navigate("/dashboard");
     } catch (err) {
       console.error(err);

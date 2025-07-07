@@ -23,6 +23,7 @@ import ProfilePage from "./pages/Profile";
 import ShopifyManualConnectPage from "./pages/Shopify/ShopifyManualConnectPage";
 import ShopifyAdvancedConfigPage from "./pages/Shopify/ShopifyAdvancedConfigPage";
 import ShopifyOAuthCallbackPage from "./pages/Shopify/ShopifyOAuthCallbackPage";
+import { AuthProvider } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
 
@@ -32,38 +33,40 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/dashboard" element={<Index />} />
-          <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
-          <Route path="/returns" element={<ReturnsPage />} />
-          <Route path="/shipping" element={<ShippingPage />} />
-          <Route path="/inventory" element={<InventoryPage />} />
-          <Route path="/labels" element={<LabelPrintingPage />} />
-          <Route path="/reconciliation" element={<ReconciliationPage />} />
-          <Route path="/reports" element={<ReportsPage />} />
-          <Route path="/brands" element={<BrandsPage />} />
-          <Route
-            path="/shopify/manual"
-            element={<ShopifyManualConnectPage />}
-          />
-          <Route
-            path="/shopify/advanced-config"
-            element={<ShopifyAdvancedConfigPage />}
-          />
-          <Route
-            path="/shopify/callback"
-            element={<ShopifyOAuthCallbackPage />}
-          />
-          <Route path="/integrations" element={<IntegrationsPage />} />
-          <Route path="/users" element={<UsersPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/dashboard" element={<Index />} />
+            <Route path="/orders" element={<OrdersPage />} />
+            <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
+            <Route path="/returns" element={<ReturnsPage />} />
+            <Route path="/shipping" element={<ShippingPage />} />
+            <Route path="/inventory" element={<InventoryPage />} />
+            <Route path="/labels" element={<LabelPrintingPage />} />
+            <Route path="/reconciliation" element={<ReconciliationPage />} />
+            <Route path="/reports" element={<ReportsPage />} />
+            <Route path="/brands" element={<BrandsPage />} />
+            <Route
+              path="/shopify/manual"
+              element={<ShopifyManualConnectPage />}
+            />
+            <Route
+              path="/shopify/advanced-config"
+              element={<ShopifyAdvancedConfigPage />}
+            />
+            <Route
+              path="/shopify/callback"
+              element={<ShopifyOAuthCallbackPage />}
+            />
+            <Route path="/integrations" element={<IntegrationsPage />} />
+            <Route path="/users" element={<UsersPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
