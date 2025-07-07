@@ -24,6 +24,8 @@ import ShopifyManualConnectPage from "./pages/Shopify/ShopifyManualConnectPage";
 import ShopifyAdvancedConfigPage from "./pages/Shopify/ShopifyAdvancedConfigPage";
 import ShopifyOAuthCallbackPage from "./pages/Shopify/ShopifyOAuthCallbackPage";
 import { AuthProvider } from "./context/AuthContext";
+import ProductDetailsPage from "./pages/Products/ProductDetailsPage";
+import ProductsPage from "./pages/Products/ProductsPage";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +42,11 @@ const App = () => (
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/dashboard" element={<Index />} />
+            <Route
+              path="/products/:productId"
+              element={<ProductDetailsPage />}
+            />
+            <Route path="/products" element={<ProductsPage />} />
             <Route path="/orders" element={<OrdersPage />} />
             <Route path="/orders/:orderId" element={<OrderDetailsPage />} />
             <Route path="/returns" element={<ReturnsPage />} />

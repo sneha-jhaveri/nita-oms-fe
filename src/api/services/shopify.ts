@@ -72,6 +72,8 @@ export const getOrderById = (
 
 // 10. Get paginated products for a store
 export const getProducts = (storeId: string, page = 1, limit = 20) => {
+  console.log("Calling getProducts API with:", { storeId, page, limit });
+
   return axiosInstance.get(`/shopify/products/${storeId}`, {
     params: { page, limit },
   });

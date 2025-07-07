@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export type OrderStatus = "pending" | "picked" | "paid" | "cancelled" | "returned";
 
@@ -48,4 +49,16 @@ export interface CourierOption {
   fee: string;
   eta: string;
   rtoRate: string;
+}
+
+export interface ProductData {
+  brand: string;
+  sku: string;
+  available: any;
+  id: string;
+  title: string;
+  image?: string;
+  price: string;
+  inventory: number;
+  createdAt: string;
 }

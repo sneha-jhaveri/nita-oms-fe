@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/context/AuthContext.tsx
 import { createContext, useContext, useEffect, useState } from "react";
 import { getProfile } from "@/api/services/profile";
 
 interface User {
+  storeId: any;
   id: string;
   email: string;
   firstName: string;
@@ -30,6 +32,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const token = localStorage.getItem("token");
       if (!token) return;
       const res = await getProfile();
+      console.log("Profile data:", res.data);
       setUser(res.data);
     } catch (err) {
       console.error("Failed to fetch profile", err);

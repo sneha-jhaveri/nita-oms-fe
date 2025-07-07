@@ -9,6 +9,7 @@ import {
   ReceiptIcon,
   RefreshCwIcon,
   Settings2Icon,
+  ShoppingCartIcon,
   TruckIcon,
   UsersIcon,
 } from "lucide-react";
@@ -41,6 +42,12 @@ export const sidebarItems: SidebarItem[] = [
       "rto_agent",
       "brand_user",
     ],
+  },
+  {
+    name: "Products",
+    href: "/products",
+    icon: ShoppingCartIcon,
+    roles: ["admin", "brand_user"],
   },
   {
     name: "Returns & RTO",
