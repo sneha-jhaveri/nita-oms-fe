@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 
-export const publicBaseUrl =
-  "https://shopify-oms-691156478708.us-central1.run.app";
+// export const publicBaseUrl =
+//   "https://shopify-oms-691156478708.us-central1.run.app";
+
+export const publicBaseUrl = "https://chvs4xgl-3000.inc1.devtunnels.ms/";
 
 const axiosInstance = axios.create({
   baseURL: publicBaseUrl,
