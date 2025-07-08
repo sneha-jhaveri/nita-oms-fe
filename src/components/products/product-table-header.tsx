@@ -1,3 +1,4 @@
+// src/components/products/product-table-header.tsx
 import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 import { ProductData } from "@/types";
 
@@ -45,7 +46,7 @@ export function ProductTableHeader({
     <thead className="bg-muted/50">
       <tr>
         <SortableHeader field="title">Title</SortableHeader>
-        <NormalHeader>Brand</NormalHeader>
+        <NormalHeader>Vendor</NormalHeader> {/* Changed from Brand to Vendor */}
         <NormalHeader>SKU</NormalHeader>
         <SortableHeader field="price">Price</SortableHeader>
         <NormalHeader>Available</NormalHeader>

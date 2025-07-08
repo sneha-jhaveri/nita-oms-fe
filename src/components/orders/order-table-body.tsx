@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { OrderData } from "@/types";
@@ -10,18 +9,27 @@ interface OrderTableBodyProps {
   onClearFilters: () => void;
 }
 
-export function OrderTableBody({ orders, searchTerm, onClearFilters }: OrderTableBodyProps) {
+export function OrderTableBody({
+  orders,
+  searchTerm,
+  onClearFilters,
+}: OrderTableBodyProps) {
   return (
     <tbody>
       {orders.length > 0 ? (
         orders.map((order) => (
           <tr key={order.orderId} className="border-t hover:bg-muted/50">
             <td className="px-4 py-3 text-sm">
-              <Link to={`/orders/${order.orderId}`} className="font-medium text-primary hover:underline">
+              <Link
+                to={`/orders/${order.orderId}`}
+                className="font-medium text-primary hover:underline"
+              >
                 #{order.orderId}
               </Link>
               {order.isDuplicate && (
-                <span className="ml-2 text-xs text-amber-500 font-medium">Duplicate</span>
+                <span className="ml-2 text-xs text-amber-500 font-medium">
+                  Duplicate
+                </span>
               )}
             </td>
             <td className="px-4 py-3 text-sm">{order.customer.name}</td>
@@ -31,7 +39,9 @@ export function OrderTableBody({ orders, searchTerm, onClearFilters }: OrderTabl
             </td>
             <td className="px-4 py-3 text-sm">{order.courier || "—"}</td>
             <td className="px-4 py-3 text-sm">{order.totalAmount}</td>
-            <td className="px-4 py-3 text-sm">{new Date(order.createdAt).toLocaleDateString()}</td>
+            <td className="px-4 py-3 text-sm">
+              {new Date(order.createdAt).toLocaleDateString()}
+            </td>
           </tr>
         ))
       ) : (
@@ -40,8 +50,8 @@ export function OrderTableBody({ orders, searchTerm, onClearFilters }: OrderTabl
             <div className="flex flex-col items-center justify-center space-y-2">
               <p className="text-muted-foreground">No orders found</p>
               {searchTerm && (
-                <Button 
-                  variant="link" 
+                <Button
+                  variant="link"
                   className="h-auto p-0 text-sm"
                   onClick={onClearFilters}
                 >

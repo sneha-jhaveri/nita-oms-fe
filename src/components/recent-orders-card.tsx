@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -42,17 +41,25 @@ export function RecentOrdersCard({ orders }: RecentOrdersCardProps) {
               </thead>
               <tbody>
                 {orders.map((order) => (
-                  <tr key={order.orderId} className="border-t hover:bg-muted/50">
+                  <tr key={order._id} className="border-t hover:bg-muted/50">
                     <td className="px-4 py-3 text-sm">
-                      <Link to={`/orders/${order.orderId}`} className="font-medium text-primary hover:underline">
-                        #{order.orderId}
+                      <Link
+                        to={`/orders/${order._id}`}
+                        className="font-medium text-primary hover:underline"
+                      >
+                        {order.orderName || `#${order.orderNumber}`}
                       </Link>
                     </td>
-                    <td className="px-4 py-3 text-sm">{order.customer.name}</td>
+                    <td className="px-4 py-3 text-sm">
+                      {order.customer.firstName} {order.customer.lastName}
+                    </td>
                     <td className="px-4 py-3 text-sm">
                       <StatusBadge status={order.status} />
                     </td>
-                    <td className="px-4 py-3 text-sm">{order.totalAmount}</td>
+                    <td className="px-4 py-3 text-sm">
+                      {order.financialSummary?.totalPrice}{" "}
+                      {order.financialSummary?.currency}
+                    </td>
                     <td className="px-4 py-3 text-sm">
                       {new Date(order.createdAt).toLocaleDateString()}
                     </td>
@@ -60,7 +67,10 @@ export function RecentOrdersCard({ orders }: RecentOrdersCardProps) {
                 ))}
                 {orders.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="px-4 py-6 text-center text-muted-foreground">
+                    <td
+                      colSpan={5}
+                      className="px-4 py-6 text-center text-muted-foreground"
+                    >
                       No recent orders
                     </td>
                   </tr>

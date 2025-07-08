@@ -5,8 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import OrdersPage from "./pages/OrdersPage";
-import OrderDetailsPage from "./pages/OrderDetailsPage";
+import OrdersPage from "./pages/Orders/OrdersPage";
+import OrderDetailsPage from "./pages/Orders/OrderDetailsPage";
 import ReturnsPage from "./pages/ReturnsPage";
 import ShippingPage from "./pages/ShippingPage";
 import InventoryPage from "./pages/InventoryPage";
@@ -14,18 +14,19 @@ import LabelPrintingPage from "./pages/LabelPrintingPage";
 import ReconciliationPage from "./pages/ReconciliationPage";
 import ReportsPage from "./pages/ReportsPage";
 import BrandsPage from "./pages/BrandsPage";
-import UsersPage from "./pages/UsersPage";
+import UsersPage from "./pages/Users/UsersPage";
 import SettingsPage from "./pages/SettingsPage";
-import IntegrationsPage from "./pages/IntegrationsPage";
-import LoginPage from "./pages/Login";
-import SignupPage from "./pages/SignUp";
-import ProfilePage from "./pages/Profile";
+import IntegrationsPage from "./pages/Integrations/IntegrationsPage";
+import LoginPage from "./pages/Auth/Login";
+import SignupPage from "./pages/Auth/SignUp";
+import ProfilePage from "./pages/Users/Profile";
 import ShopifyManualConnectPage from "./pages/Shopify/ShopifyManualConnectPage";
 import ShopifyAdvancedConfigPage from "./pages/Shopify/ShopifyAdvancedConfigPage";
 import ShopifyOAuthCallbackPage from "./pages/Shopify/ShopifyOAuthCallbackPage";
 import { AuthProvider } from "./context/AuthContext";
 import ProductDetailsPage from "./pages/Products/ProductDetailsPage";
 import ProductsPage from "./pages/Products/ProductsPage";
+import ShopifyIntegrationsList from "./pages/Integrations/ShopifyIntegrationsList";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +71,11 @@ const App = () => (
               element={<ShopifyOAuthCallbackPage />}
             />
             <Route path="/integrations" element={<IntegrationsPage />} />
+            <Route
+              path="/integrations/shopify-list"
+              element={<ShopifyIntegrationsList />}
+            />
+
             <Route path="/users" element={<UsersPage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="*" element={<NotFound />} />

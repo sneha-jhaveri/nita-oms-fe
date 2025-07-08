@@ -10,6 +10,7 @@ import {
   RefreshCwIcon,
   Settings2Icon,
   ShoppingCartIcon,
+  StoreIcon,
   TruckIcon,
   UsersIcon,
 } from "lucide-react";
@@ -90,6 +91,12 @@ export const sidebarItems: SidebarItem[] = [
     href: "/integrations",
     icon: PlugIcon, // Optional: import from lucide-react
     roles: ["admin"], // adjust as needed
+  },
+  {
+    name: "Shopify Integrations",
+    href: "/integrations/shopify-list",
+    icon: StoreIcon,
+    roles: ["admin", "manager", "support"],
   },
   {
     name: "Brands",

@@ -28,27 +28,79 @@ export interface OrderItem {
   quantity: number;
   total: string;
 }
-
 export interface OrderData {
-  id: string;
   orderId: string;
-  customer: Customer;
-  items: OrderItem[];
-  status: OrderStatus;
+  _id: string;
+  shopifyOrderId: string;
+  orderNumber: string;
+  orderName: string;
   totalAmount: string;
-  totalGST: string;
-  shippingCost: string;
-  paymentMethod: string;
+  orderDate: string;
+  brand: string;
+  customer: {
+    id: string;
+    email?: string;
+    name: string;
+    firstName: string;
+    lastName: string;
+    phone?: string;
+  };
+  lineItems: {
+    id: string;
+    title: string;
+    quantity: number;
+    price: string;
+    sku?: string;
+    variantId?: string;
+    variantTitle?: string;
+    productId?: string;
+    fulfillmentStatus?: string | null;
+    taxable?: boolean;
+    grams?: number;
+  }[];
+  shippingAddress: {
+    firstName: string;
+    lastName: string;
+    address1: string;
+    city: string;
+    province: string;
+    country: string;
+    zip: string;
+    phone?: string | null;
+    countryCode?: string;
+    provinceCode?: string;
+  } | null;
+  billingAddress: {
+    firstName: string;
+    lastName: string;
+    address1: string;
+    city: string;
+    province: string;
+    country: string;
+    zip: string;
+    phone?: string | null;
+  };
+  financialSummary: {
+    subtotal: number;
+    totalTax: number;
+    totalDiscounts: number;
+    totalShipping: number;
+    totalPrice: number;
+    currency: string;
+  };
+  status: string;
+  paymentStatus: string;
+  fulfillmentStatus: string | null;
+  isDuplicate: boolean;
+  isSynced: boolean;
   createdAt: string;
   updatedAt: string;
+  shopifyStoreId: string;
+  shopDomain: string;
+  tags: string[];
   courier?: string;
   trackingId?: string;
-  brand: string;
-  isDuplicate?: boolean;
   notes?: string;
-  isCod?: boolean;
-  paymentStatus?: string;
-  fulfillmentStatus?: string;
 }
 
 export interface CourierOption {
@@ -60,13 +112,13 @@ export interface CourierOption {
 }
 
 export interface ProductData {
-  brand: string;
-  sku: string;
-  available: any;
   id: string;
   title: string;
-  image?: string;
   price: string;
   inventory: number;
+  image?: string;
   createdAt: string;
+  vendor: string;
+  sku?: string;
+  available: boolean;
 }

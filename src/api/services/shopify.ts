@@ -49,7 +49,7 @@ export const getAdvancedConfig = (storeId: string) => {
 export const getFilteredOrders = (
   storeId: string,
   params: {
-    cod?: string; 
+    cod?: string;
     status?: string;
     paymentStatus?: string;
     fulfillmentStatus?: string;
@@ -97,4 +97,14 @@ export const getStoreSyncConfig = (storeId: string, orgId: string) => {
   return axiosInstance.get(
     `/shopify/sync-config/store-config/${storeId}/${orgId}`
   );
+};
+
+// 15. Get all connected stores
+export const getAllShopifyStores = () => {
+  return axiosInstance.get("/shopify/stores");
+};
+
+// 16. Get a specific store by ID
+export const getShopifyStoreById = (storeId: string) => {
+  return axiosInstance.get(`/shopify/stores/${storeId}`);
 };

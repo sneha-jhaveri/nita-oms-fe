@@ -1,26 +1,64 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/pages/ProductsPage.tsx
 import { useEffect, useState } from "react";
 import { Layout } from "@/components/layout";
 import { getProducts } from "@/api/services/shopify";
 import { useAuth } from "@/context/AuthContext";
-import ProductTable from "@/components/products/product-table";
+import { ProductTable } from "@/components/products/product-table";
+
+export interface ProductData {
+  id: string;
+  title: string;
+  price: string;
+  inventory: number;
+  image?: string;
+  createdAt: string;
+  vendor: string;
+  sku?: string;
+  available: boolean;
+}
 
 const ProductsPage = () => {
   const { user } = useAuth();
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<ProductData[]>([]);
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const fetchProducts = async () => {
-    if (!user?.storeId)
-      return console.error("No store ID found in user context");
+    const storeId = user?.storeId || localStorage.getItem("storeId");
+    if (!storeId) {
+      console.error("Missing storeId");
+      return;
+    }
     setLoading(true);
     try {
-      const res = await getProducts(user.storeId, page, limit);
-      setProducts(res.data);
-      setHasNextPage(res.data.length === limit);
+      const res = await getProducts(storeId, page, limit);
+      const { success, data } = res.data;
+      if (!success || !Array.isArray(data)) {
+        setProducts([]);
+        setHasNextPage(false);
+        return;
+      }
+      const mappedProducts = data.map((product: any) => ({
+        id: product.shopifyProductId,
+        title: product.metaData.title,
+        price: product.metaData.variants[0]?.price || "0.00",
+        inventory: product.metaData.variants[0]?.inventory_quantity || 0,
+        image:
+          product.images[0]?.src ||
+          product.metaData.images[0]?.src ||
+          "https://via.placeholder.com/300",
+        createdAt: product.createdAt,
+        vendor: product.vendor,
+        sku: product.metaData.variants[0]?.sku || undefined,
+        available:
+          (product.metaData.variants[0]?.inventory_quantity || 0) > 0 &&
+          product.status === "active",
+      }));
+      setProducts(mappedProducts);
+      setHasNextPage(data.length === limit);
     } catch (err) {
       console.error("Failed to load products", err);
     } finally {

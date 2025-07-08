@@ -1,3 +1,4 @@
+// src/components/products/product-table.tsx
 import {
   Table,
   TableBody,
@@ -8,8 +9,9 @@ import {
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ProductData } from "@/types";
-
-import { useNavigate } from "react-router-dom";
+import { ProductTableHeader } from "./product-table-header";
+import { ProductTableBody } from "./product-table-body";
+import { useState } from "react";
 import { ProductPagination } from "./product-pagination";
 
 interface Props {
@@ -20,62 +22,67 @@ interface Props {
   hasNextPage: boolean;
 }
 
-const ProductTable = ({
+export const ProductTable = ({
   products,
   loading,
   page,
   onPageChange,
   hasNextPage,
 }: Props) => {
-  const navigate = useNavigate();
+  const [sortField, setSortField] = useState<keyof ProductData | null>(null);
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSort = (field: keyof ProductData) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+    } else {
+      setSortField(field);
+      setSortDirection("asc");
+    }
+  };
+
+  const filteredAndSortedProducts = [...products]
+    .filter((product) =>
+      product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (!sortField) return 0;
+      if (a[sortField] < b[sortField]) return sortDirection === "asc" ? -1 : 1;
+      if (a[sortField] > b[sortField]) return sortDirection === "asc" ? 1 : -1;
+      return 0;
+    });
+
+  const handleClearFilters = () => setSearchTerm("");
 
   return (
     <div className="space-y-4">
       <div className="border rounded-md">
         <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Image</TableHead>
-              <TableHead>Title</TableHead>
-              <TableHead>Price</TableHead>
-              <TableHead>Inventory</TableHead>
-              <TableHead>Created</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {loading
-              ? [...Array(5)].map((_, i) => (
-                  <TableRow key={i}>
-                    <TableCell colSpan={5}>
-                      <Skeleton className="h-6 w-full" />
-                    </TableCell>
-                  </TableRow>
-                ))
-              : products.map((product) => (
-                  <TableRow
-                    key={product.id}
-                    className="cursor-pointer hover:bg-muted"
-                    onClick={() => navigate(`/products/${product.id}`)}
-                  >
-                    <TableCell>
-                      <img
-                        src={product.image || "https://via.placeholder.com/40"}
-                        alt={product.title}
-                        className="w-10 h-10 rounded object-cover"
-                      />
-                    </TableCell>
-                    <TableCell>{product.title}</TableCell>
-                    <TableCell>${product.price}</TableCell>
-                    <TableCell>{product.inventory}</TableCell>
-                    <TableCell>
-                      {new Date(product.createdAt).toLocaleDateString()}
-                    </TableCell>
-                  </TableRow>
-                ))}
-          </TableBody>
+          <ProductTableHeader
+            sortField={sortField}
+            sortDirection={sortDirection}
+            onSort={handleSort}
+          />
+          {loading ? (
+            <TableBody>
+              {[...Array(5)].map((_, i) => (
+                <TableRow key={i}>
+                  <TableCell colSpan={6}>
+                    <Skeleton className="h-6 w-full" />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          ) : (
+            <ProductTableBody
+              products={filteredAndSortedProducts}
+              searchTerm={searchTerm}
+              onClearFilters={handleClearFilters}
+            />
+          )}
         </Table>
       </div>
-
       <ProductPagination
         currentPage={page}
         totalPages={hasNextPage ? page + 1 : page}
@@ -84,5 +91,3 @@ const ProductTable = ({
     </div>
   );
 };
-
-export default ProductTable;

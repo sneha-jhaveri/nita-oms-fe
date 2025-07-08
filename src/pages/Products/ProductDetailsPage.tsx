@@ -1,11 +1,23 @@
+// src/pages/ProductDetailsPage.tsx
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Layout } from "@/components/layout";
 import { getProductById } from "@/api/services/shopify";
-import { ProductData } from "@/types";
 import { useAuth } from "@/context/AuthContext";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+
+export interface ProductData {
+  id: string;
+  title: string;
+  price: string;
+  inventory: number;
+  image?: string;
+  createdAt: string;
+  vendor: string;
+  sku?: string;
+  available: boolean;
+}
 
 const ProductDetailsPage = () => {
   const { productId } = useParams();
@@ -21,7 +33,21 @@ const ProductDetailsPage = () => {
       setLoading(true);
       try {
         const res = await getProductById(user.storeId, productId);
-        setProduct(res.data);
+        const productData = res.data;
+        setProduct({
+          id: productData.shopifyProductId,
+          title: productData.title,
+          price: productData.variants[0]?.price || "0.00",
+          inventory: productData.variants[0]?.inventoryQuantity || 0,
+          image:
+            productData.images[0]?.src || "https://via.placeholder.com/300",
+          createdAt: productData.createdAt,
+          vendor: productData.vendor,
+          sku: productData.variants[0]?.sku || undefined,
+          available:
+            (productData.variants[0]?.inventoryQuantity || 0) > 0 &&
+            productData.status === "active",
+        });
       } catch (err) {
         console.error("Failed to fetch product", err);
       } finally {
@@ -41,7 +67,8 @@ const ProductDetailsPage = () => {
               {loading ? <Skeleton className="h-6 w-64" /> : product?.title}
             </h1>
             <p className="text-muted-foreground text-sm">
-              Product ID: {product?.id}
+              Product ID:{" "}
+              {loading ? <Skeleton className="h-4 w-32" /> : product?.id}
             </p>
           </div>
           <Button variant="outline" onClick={() => navigate(-1)}>
@@ -89,6 +116,34 @@ const ProductDetailsPage = () => {
                   <Skeleton className="h-4 w-32" />
                 ) : (
                   new Date(product?.createdAt || "").toLocaleString()
+                )}
+              </p>
+            </div>
+            <div>
+              <p className="text-muted-foreground">Vendor</p>
+              <p className="text-lg font-medium">
+                {loading ? <Skeleton className="h-5 w-20" /> : product?.vendor}
+              </p>
+            </div>
+            <div>
+              <p className="text-muted-foreground">SKU</p>
+              <p className="text-lg font-medium">
+                {loading ? (
+                  <Skeleton className="h-5 w-20" />
+                ) : (
+                  product?.sku || "N/A"
+                )}
+              </p>
+            </div>
+            <div>
+              <p className="text-muted-foreground">Available</p>
+              <p className="text-lg font-medium">
+                {loading ? (
+                  <Skeleton className="h-5 w-20" />
+                ) : product?.available ? (
+                  "Yes"
+                ) : (
+                  "No"
                 )}
               </p>
             </div>

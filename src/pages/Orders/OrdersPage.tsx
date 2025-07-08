@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { Layout } from "@/components/layout";
 import { OrderTable } from "@/components/orders/order-table";
@@ -40,8 +41,46 @@ const OrdersPage = () => {
         limit: 20,
       });
 
-      setOrders(res.data.orders || []);
-      setTotalPages(res.data.totalPages || 1);
+      const rawOrders = res.data.data || [];
+
+      const mapped: OrderData[] = rawOrders.map((order: any) => ({
+        id: order._id,
+        orderId: order._id,
+        customer: {
+          name: `${order.customer?.firstName || ""} ${
+            order.customer?.lastName || ""
+          }`.trim(),
+          phone: order.customer?.phone || "",
+          email: order.customer?.email || "",
+        },
+        items:
+          order.lineItems?.map((item: any) => ({
+            id: item.id,
+            name: item.title,
+            quantity: item.quantity,
+            price: item.price,
+            total: (Number(item.price) * item.quantity).toFixed(2),
+          })) || [],
+        status: order.status,
+        totalAmount: order.financialSummary?.totalPrice?.toString() || "0",
+        totalGST: order.financialSummary?.totalTax?.toString() || "0",
+        shippingCost: order.financialSummary?.totalShipping?.toString() || "0",
+        paymentMethod: order.isCod ? "COD" : "Prepaid",
+        createdAt: order.createdAt,
+        updatedAt: order.updatedAt,
+        courier: order.courier || "",
+        trackingId: order.trackingId || "",
+        brand: order.shopDomain || "—",
+        isDuplicate: order.isDuplicate,
+        notes: order.notes,
+        isCod: order.isCod,
+        paymentStatus: order.paymentStatus,
+        fulfillmentStatus: order.fulfillmentStatus,
+      }));
+
+      setOrders(mapped);
+      setTotalPages(res.data?.meta?.totalPages || 1);
+
     } catch (err) {
       console.error("Failed to fetch orders", err);
     } finally {

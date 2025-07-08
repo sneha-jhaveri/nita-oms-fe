@@ -1,3 +1,4 @@
+// src/components/products/product-table-body.tsx
 import { Link } from "react-router-dom";
 import { ProductData } from "@/types";
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,8 @@ export function ProductTableBody({
                 {product.title}
               </Link>
             </td>
-            <td className="px-4 py-3 text-sm">{product.brand || "-"}</td>
+            <td className="px-4 py-3 text-sm">{product.vendor || "-"}</td>{" "}
+            {/* Changed from brand to vendor */}
             <td className="px-4 py-3 text-sm">{product.sku || "-"}</td>
             <td className="px-4 py-3 text-sm">₹{product.price}</td>
             <td className="px-4 py-3 text-sm">
