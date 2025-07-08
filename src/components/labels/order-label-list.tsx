@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { PrinterIcon, EyeIcon } from "lucide-react";
@@ -29,10 +28,11 @@ export function OrderLabelList({
   selectedOrders,
   onSelectOrder,
   onSelectAll,
-  onViewOrder
+  onViewOrder,
 }: OrderLabelListProps) {
-  const allSelected = orders.length > 0 && selectedOrders.length === orders.length;
-  
+  const allSelected =
+    orders.length > 0 && selectedOrders.length === orders.length;
+
   return (
     <div className="rounded-md border">
       <div className="overflow-x-auto">
@@ -41,7 +41,7 @@ export function OrderLabelList({
             <tr>
               <th className="px-4 py-3 text-left">
                 <div className="flex items-center">
-                  <Checkbox 
+                  <Checkbox
                     checked={allSelected}
                     onCheckedChange={onSelectAll}
                     aria-label="Select all orders"
@@ -49,7 +49,7 @@ export function OrderLabelList({
                 </div>
               </th>
               <th className="whitespace-nowrap px-4 py-3 text-left text-sm font-semibold">
-                Order ID
+                Order Number
               </th>
               <th className="whitespace-nowrap px-4 py-3 text-left text-sm font-semibold">
                 Customer
@@ -71,14 +71,15 @@ export function OrderLabelList({
           <tbody>
             {orders.length > 0 ? (
               orders.map((order) => (
-                <tr 
-                  key={order.id} 
-                  className={cn("border-t hover:bg-muted/50", 
+                <tr
+                  key={order.id}
+                  className={cn(
+                    "border-t hover:bg-muted/50",
                     selectedOrders.includes(order.id) ? "bg-muted/50" : ""
                   )}
                 >
                   <td className="px-4 py-3">
-                    <Checkbox 
+                    <Checkbox
                       checked={selectedOrders.includes(order.id)}
                       onCheckedChange={() => onSelectOrder(order.id)}
                       aria-label={`Select order ${order.id}`}
@@ -91,7 +92,10 @@ export function OrderLabelList({
                     {order.courier ? (
                       <span className="font-medium">{order.courier}</span>
                     ) : (
-                      <Badge variant="outline" className="text-yellow-600 bg-yellow-50 border-yellow-200">
+                      <Badge
+                        variant="outline"
+                        className="text-yellow-600 bg-yellow-50 border-yellow-200"
+                      >
                         Unassigned
                       </Badge>
                     )}
@@ -99,15 +103,15 @@ export function OrderLabelList({
                   <td className="px-4 py-3 text-sm">{order.weight}</td>
                   <td className="px-4 py-3 text-sm">
                     <div className="flex items-center gap-2">
-                      <Button 
-                        size="sm" 
-                        variant="ghost" 
+                      <Button
+                        size="sm"
+                        variant="ghost"
                         onClick={() => onViewOrder(order.id)}
                       >
                         <EyeIcon className="h-4 w-4" />
                       </Button>
-                      <Button 
-                        size="sm" 
+                      <Button
+                        size="sm"
                         variant="ghost"
                         disabled={!order.courier}
                       >
@@ -119,7 +123,10 @@ export function OrderLabelList({
               ))
             ) : (
               <tr>
-                <td colSpan={7} className="px-4 py-6 text-center text-muted-foreground">
+                <td
+                  colSpan={7}
+                  className="px-4 py-6 text-center text-muted-foreground"
+                >
                   No orders found matching your criteria
                 </td>
               </tr>

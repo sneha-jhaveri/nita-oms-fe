@@ -45,7 +45,7 @@ const OrdersPage = () => {
 
       const mapped: OrderData[] = rawOrders.map((order: any) => ({
         id: order._id,
-        orderId: order._id,
+        orderId: order.orderNumber,
         customer: {
           name: `${order.customer?.firstName || ""} ${
             order.customer?.lastName || ""
@@ -80,7 +80,6 @@ const OrdersPage = () => {
 
       setOrders(mapped);
       setTotalPages(res.data?.meta?.totalPages || 1);
-
     } catch (err) {
       console.error("Failed to fetch orders", err);
     } finally {

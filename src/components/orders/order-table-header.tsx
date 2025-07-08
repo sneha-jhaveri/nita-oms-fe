@@ -1,4 +1,3 @@
-
 import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 import { OrderData } from "@/types";
 
@@ -13,11 +12,11 @@ export function OrderTableHeader({
   sortDirection,
   onSort,
 }: OrderTableHeaderProps) {
-  const SortableHeader = ({ 
-    field, 
-    children 
-  }: { 
-    field: keyof OrderData; 
+  const SortableHeader = ({
+    field,
+    children,
+  }: {
+    field: keyof OrderData;
     children: React.ReactNode;
   }) => (
     <th
@@ -26,11 +25,12 @@ export function OrderTableHeader({
     >
       <div className="flex items-center gap-1">
         {children}
-        {sortField === field && (
-          sortDirection === "asc" ? 
-            <ArrowUpIcon className="h-4 w-4" /> : 
+        {sortField === field &&
+          (sortDirection === "asc" ? (
+            <ArrowUpIcon className="h-4 w-4" />
+          ) : (
             <ArrowDownIcon className="h-4 w-4" />
-        )}
+          ))}
       </div>
     </th>
   );
@@ -44,7 +44,7 @@ export function OrderTableHeader({
   return (
     <thead className="bg-muted/50">
       <tr>
-        <SortableHeader field="orderId">Order ID</SortableHeader>
+        <SortableHeader field="orderId">Order Number</SortableHeader>
         <NormalHeader>Customer</NormalHeader>
         <NormalHeader>Brand</NormalHeader>
         <SortableHeader field="status">Status</SortableHeader>
