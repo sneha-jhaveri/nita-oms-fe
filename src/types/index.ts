@@ -117,8 +117,10 @@ export interface ProductData {
   price: string;
   inventory: number;
   image?: string;
+  images?: { src: string; altText?: string }[]; // use object, not just string[]
   createdAt: string;
   vendor: string;
   sku?: string;
   available: boolean;
 }
+

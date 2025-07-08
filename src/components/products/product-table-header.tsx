@@ -45,6 +45,7 @@ export function ProductTableHeader({
   return (
     <thead className="bg-muted/50">
       <tr>
+        <NormalHeader>Image</NormalHeader>
         <SortableHeader field="title">Title</SortableHeader>
         <NormalHeader>Vendor</NormalHeader> {/* Changed from Brand to Vendor */}
         <NormalHeader>SKU</NormalHeader>

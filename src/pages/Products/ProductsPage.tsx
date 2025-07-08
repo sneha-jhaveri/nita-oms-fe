@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // src/pages/ProductsPage.tsx
+
 import { useEffect, useState } from "react";
 import { Layout } from "@/components/layout";
 import { getProducts } from "@/api/services/shopify";
@@ -12,6 +13,7 @@ export interface ProductData {
   price: string;
   inventory: number;
   image?: string;
+  images?: { src: string; altText?: string }[]; // ✅ added
   createdAt: string;
   vendor: string;
   sku?: string;
@@ -32,31 +34,45 @@ const ProductsPage = () => {
       console.error("Missing storeId");
       return;
     }
+
     setLoading(true);
+
     try {
       const res = await getProducts(storeId, page, limit);
       const { success, data } = res.data;
+
       if (!success || !Array.isArray(data)) {
         setProducts([]);
         setHasNextPage(false);
         return;
       }
-      const mappedProducts = data.map((product: any) => ({
-        id: product.shopifyProductId,
-        title: product.metaData.title,
-        price: product.metaData.variants[0]?.price || "0.00",
-        inventory: product.metaData.variants[0]?.inventory_quantity || 0,
-        image:
-          product.images[0]?.src ||
-          product.metaData.images[0]?.src ||
-          "https://via.placeholder.com/300",
-        createdAt: product.createdAt,
-        vendor: product.vendor,
-        sku: product.metaData.variants[0]?.sku || undefined,
-        available:
-          (product.metaData.variants[0]?.inventory_quantity || 0) > 0 &&
-          product.status === "active",
-      }));
+
+      const mappedProducts: ProductData[] = data.map((product: any) => {
+        const variants = product.metaData?.variants || [];
+        const images = product.metaData?.images || [];
+
+        return {
+          id: product.shopifyProductId,
+          title: product.metaData.title,
+          price: variants[0]?.price || "0.00",
+          inventory: variants[0]?.inventory_quantity || 0,
+          image:
+            product.images?.[0]?.src ||
+            product.metaData?.images?.[0]?.src ||
+            "https://via.placeholder.com/300",
+          images: images.map((img: any) => ({
+            src: img.src,
+            altText: img.alt || "",
+          })),
+          createdAt: product.createdAt,
+          vendor: product.vendor,
+          sku: variants[0]?.sku || undefined,
+          available:
+            (variants[0]?.inventory_quantity || 0) > 0 &&
+            product.status === "active",
+        };
+      });
+
       setProducts(mappedProducts);
       setHasNextPage(data.length === limit);
     } catch (err) {

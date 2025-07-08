@@ -20,6 +20,17 @@ export function ProductTableBody({
         products.map((product) => (
           <tr key={product.id} className="border-t hover:bg-muted/50">
             <td className="px-4 py-3 text-sm">
+              {product.images?.length ? (
+                <img
+                  src={product.images[0].src}
+                  alt={product.images[0].altText || product.title}
+                  className="h-12 w-12 object-contain rounded"
+                />
+              ) : (
+                <div className="h-12 w-12 bg-gray-200 rounded" />
+              )}
+            </td>
+            <td className="px-4 py-3 text-sm">
               <Link
                 to={`/products/${product.id}`}
                 className="font-medium text-primary hover:underline"
