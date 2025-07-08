@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export type OrderStatus = "pending" | "picked" | "paid" | "cancelled" | "returned";
+export type OrderStatus =
+  | "pending"
+  | "picked"
+  | "paid"
+  | "cancelled"
+  | "returned";
 
 export interface Customer {
   id: string;
@@ -41,6 +46,9 @@ export interface OrderData {
   brand: string;
   isDuplicate?: boolean;
   notes?: string;
+  isCod?: boolean;
+  paymentStatus?: string;
+  fulfillmentStatus?: string;
 }
 
 export interface CourierOption {

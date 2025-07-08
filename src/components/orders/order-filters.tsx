@@ -1,4 +1,3 @@
-
 import {
   Select,
   SelectContent,
@@ -6,53 +5,83 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 interface OrderFiltersProps {
   statusFilter: string;
-  brandFilter: string;
-  brands: string[];
+  paymentStatusFilter: string;
+  fulfillmentStatusFilter: string;
+  codFilter: string;
   onStatusChange: (value: string) => void;
-  onBrandChange: (value: string) => void;
+  onPaymentStatusChange: (value: string) => void;
+  onFulfillmentStatusChange: (value: string) => void;
+  onCodChange: (value: string) => void;
 }
 
 export function OrderFilters({
   statusFilter,
-  brandFilter,
-  brands,
+  paymentStatusFilter,
+  fulfillmentStatusFilter,
+  codFilter,
   onStatusChange,
-  onBrandChange,
+  onPaymentStatusChange,
+  onFulfillmentStatusChange,
+  onCodChange,
 }: OrderFiltersProps) {
   return (
-    <div className="flex flex-wrap gap-2">
-      <Select 
-        value={statusFilter} 
-        onValueChange={onStatusChange}
-      >
+    <div className="flex flex-wrap gap-4">
+      {/* Order Status */}
+      <Select value={statusFilter} onValueChange={onStatusChange}>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Status" />
+          <SelectValue placeholder="Order Status" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All Statuses</SelectItem>
           <SelectItem value="pending">Pending</SelectItem>
-          <SelectItem value="picked">Picked</SelectItem>
-          <SelectItem value="paid">Paid</SelectItem>
-          <SelectItem value="cancelled">Cancelled</SelectItem>
-          <SelectItem value="returned">Returned</SelectItem>
+          <SelectItem value="processing">Processing</SelectItem>
+          <SelectItem value="shipped">Shipped</SelectItem>
+          <SelectItem value="delivered">Delivered</SelectItem>
         </SelectContent>
       </Select>
-      
-      <Select 
-        value={brandFilter} 
-        onValueChange={onBrandChange}
-      >
+
+      {/* Payment Status */}
+      <Select value={paymentStatusFilter} onValueChange={onPaymentStatusChange}>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Brand" />
+          <SelectValue placeholder="Payment Status" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All Brands</SelectItem>
-          {brands.map((brand) => (
-            <SelectItem key={brand} value={brand}>{brand}</SelectItem>
-          ))}
+          <SelectItem value="all">All Payments</SelectItem>
+          <SelectItem value="paid">Paid</SelectItem>
+          <SelectItem value="unpaid">Unpaid</SelectItem>
+          <SelectItem value="refunded">Refunded</SelectItem>
+        </SelectContent>
+      </Select>
+
+      {/* Fulfillment Status */}
+      <Select
+        value={fulfillmentStatusFilter}
+        onValueChange={onFulfillmentStatusChange}
+      >
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Fulfillment Status" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All Fulfillments</SelectItem>
+          <SelectItem value="fulfilled">Fulfilled</SelectItem>
+          <SelectItem value="unfulfilled">Unfulfilled</SelectItem>
+          <SelectItem value="partial">Partially Fulfilled</SelectItem>
+        </SelectContent>
+      </Select>
+
+      {/* COD */}
+      <Select value={codFilter} onValueChange={onCodChange}>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="COD Type" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All</SelectItem>
+          <SelectItem value="true">COD</SelectItem>
+          <SelectItem value="false">Prepaid</SelectItem>
         </SelectContent>
       </Select>
     </div>

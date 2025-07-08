@@ -26,9 +26,24 @@ const ShopifyManualConnectPage = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await manualShopifyConnect(data);
-      alert("Manual connection successful!");
-      navigate("/integrations");
+      const res = await manualShopifyConnect(data);
+      const isSetupComplete = res?.data?.isSetupComplete;
+
+      const storeId = res?.data?._id;
+
+      if (storeId) {
+        localStorage.setItem("storeId", storeId);
+      }
+
+      if (isSetupComplete) {
+        alert("Manual connection successful!");
+        navigate("/integrations");
+      } else {
+        alert(
+          "Manual connection partially successful. Please complete advanced configuration."
+        );
+        navigate("/shopify/advanced-config");
+      }
     } catch (err) {
       console.error(err);
       alert("Connection failed.");

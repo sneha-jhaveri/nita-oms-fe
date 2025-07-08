@@ -46,28 +46,23 @@ export const getAdvancedConfig = (storeId: string) => {
 };
 
 // 8. Get filtered orders
-export const getFilteredOrders = (params: {
-  orgId: string;
-  storeId?: string;
-  cod?: boolean;
-  status?: string;
-  paymentStatus?: string;
-  fulfillmentStatus?: string;
-  page?: number;
-  limit?: number;
-}) => {
-  return axiosInstance.get("/shopify/orders/filter", { params });
+export const getFilteredOrders = (
+  storeId: string,
+  params: {
+    cod?: string; 
+    status?: string;
+    paymentStatus?: string;
+    fulfillmentStatus?: string;
+    page?: number;
+    limit?: number;
+  }
+) => {
+  return axiosInstance.get(`/shopify/orders/${storeId}`, { params });
 };
 
 // 9. Get single order by ID
-export const getOrderById = (
-  orderId: string,
-  orgId: string,
-  storeId: string
-) => {
-  return axiosInstance.get(`/shopify/orders/${orderId}`, {
-    params: { orgId, storeId },
-  });
+export const getOrderById = (orderId: string, storeId: string) => {
+  return axiosInstance.get(`/shopify/orders/${storeId}/${orderId}`);
 };
 
 // 10. Get paginated products for a store

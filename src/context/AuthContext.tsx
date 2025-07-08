@@ -30,10 +30,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem("token");
+      const cachedUser = localStorage.getItem("user");
+
       if (!token) return;
+
+      if (cachedUser) {
+        setUser(JSON.parse(cachedUser));
+        setLoading(false);
+        return;
+      }
+
       const res = await getProfile();
-      console.log("Profile data:", res.data);
       setUser(res.data);
+      localStorage.setItem("user", JSON.stringify(res.data));
+      console.log("Profile data:", res.data);
     } catch (err) {
       console.error("Failed to fetch profile", err);
       logout();
@@ -44,6 +54,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("orgId");
+    localStorage.removeItem("storeId");
     setUser(null);
     window.location.href = "/login";
   };

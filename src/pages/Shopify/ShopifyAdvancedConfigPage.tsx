@@ -16,7 +16,6 @@ import { Switch } from "@/components/ui/switch";
 
 const defaultValues = {
   storeId: "",
-  orgId: "", // Added to support config change trigger
   previousDaysToSync: 7,
   syncPreviousOrders: true,
   syncNewOrders: true,
@@ -56,6 +55,18 @@ const ShopifyAdvancedConfigPage = () => {
   const [form, setForm] = useState<any>(defaultValues);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (!configId) {
+      const storeId = localStorage.getItem("storeId");
+      const orgId = localStorage.getItem("orgId");
+      setForm((prev: any) => ({
+        ...prev,
+        storeId: storeId || "",
+        orgId: orgId || "",
+      }));
+    }
+  }, [configId]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     const newValue = type === "checkbox" ? checked : value;
@@ -74,7 +85,11 @@ const ShopifyAdvancedConfigPage = () => {
           alert("storeId is required for creating config.");
           return;
         }
-        await createAdvancedConfig(form);
+        const payload = {
+          ...form,
+          downloadPreviousData: true,
+        };
+        await createAdvancedConfig(payload);
         alert("Configuration created successfully.");
       }
       navigate("/integrations");
@@ -111,30 +126,6 @@ const ShopifyAdvancedConfigPage = () => {
           </div>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
-              {!configId && (
-                <div>
-                  <Label htmlFor="storeId">Store ID</Label>
-                  <Input
-                    id="storeId"
-                    name="storeId"
-                    value={form.storeId}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-              )}
-
-              <div>
-                <Label htmlFor="orgId">Organization ID</Label>
-                <Input
-                  id="orgId"
-                  name="orgId"
-                  value={form.orgId}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
               <div>
                 <Label htmlFor="previousDaysToSync">
                   Previous Days To Sync
@@ -212,7 +203,6 @@ const ShopifyAdvancedConfigPage = () => {
                 </Button>
               </div>
 
-              {/* Manual Sync + Config Change */}
               {configId && (
                 <div className="space-y-4 pt-6 border-t mt-6">
                   <h3 className="text-lg font-medium">Sync Actions</h3>

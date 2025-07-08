@@ -94,11 +94,6 @@ const IntegrationsPage = () => {
                         <Button variant="outline" asChild>
                           <Link to="/shopify/manual">Manual Connect</Link>
                         </Button>
-                        <Button variant="outline" asChild>
-                          <Link to="/shopify/advanced-config">
-                            Advance Config
-                          </Link>
-                        </Button>
                       </div>
                     </>
                   )}

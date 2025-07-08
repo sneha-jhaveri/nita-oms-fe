@@ -1,71 +1,66 @@
-// import { Layout } from "@/components/layout";
-// import { mockOrders } from "@/data/mock-data";
-// import { OrderTable } from "@/components/orders/order-table";
-// import { FilterIcon, PlusIcon } from "lucide-react";
-// import { Button } from "@/components/ui/button";
-
-// const OrdersPage = () => {
-//   return (
-//     <Layout>
-//       <div className="space-y-6">
-//         <div className="flex items-center justify-between">
-//           <div>
-//             <h1 className="text-3xl font-semibold tracking-tight">Orders</h1>
-//             <p className="text-muted-foreground">
-//               View and manage your orders from all channels.
-//             </p>
-//           </div>
-//           <div className="flex items-center gap-2">
-//             <Button variant="outline" size="sm">
-//               <FilterIcon className="mr-2 h-4 w-4" />
-//               Advanced Filter
-//             </Button>
-//             <Button size="sm">
-//               <PlusIcon className="mr-2 h-4 w-4" />
-//               New Order
-//             </Button>
-//           </div>
-//         </div>
-
-//         <OrderTable orders={mockOrders} />
-//       </div>
-//     </Layout>
-//   );
-// };
-
-// export default OrdersPage;
-
 import { useEffect, useState } from "react";
 import { Layout } from "@/components/layout";
 import { OrderTable } from "@/components/orders/order-table";
-import { FilterIcon, PlusIcon } from "lucide-react";
+import { FilterIcon, PlusIcon, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 import { getFilteredOrders } from "@/api/services/shopify";
 import { OrderData } from "@/types";
+import { Label } from "@/components/ui/label";
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState<OrderData[]>([]);
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("all");
+  const [paymentStatus, setPaymentStatus] = useState("all");
+  const [fulfillmentStatus, setFulfillmentStatus] = useState("all");
+  const [cod, setCod] = useState("all");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const fetchOrders = async () => {
+    setLoading(true);
+    try {
+      const storeId = localStorage.getItem("storeId");
+      if (!storeId) throw new Error("Missing storeId");
+
+      const res = await getFilteredOrders(storeId, {
+        cod: cod !== "all" ? cod : undefined,
+        status: status !== "all" ? status : undefined,
+        paymentStatus: paymentStatus !== "all" ? paymentStatus : undefined,
+        fulfillmentStatus:
+          fulfillmentStatus !== "all" ? fulfillmentStatus : undefined,
+        page,
+        limit: 20,
+      });
+
+      setOrders(res.data.orders || []);
+      setTotalPages(res.data.totalPages || 1);
+    } catch (err) {
+      console.error("Failed to fetch orders", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      setLoading(true);
-      try {
-        const res = await getFilteredOrders({
-          orgId: "YOUR_ORG_ID", // 🔁 Replace dynamically
-          page: 1,
-          limit: 20,
-        });
-        setOrders(res.data.orders || []);
-      } catch (err) {
-        console.error("Failed to fetch orders", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchOrders();
-  }, []);
+  }, [page]);
+
+  const clearFilters = () => {
+    setStatus("all");
+    setPaymentStatus("all");
+    setFulfillmentStatus("all");
+    setCod("all");
+    setPage(1);
+    fetchOrders();
+  };
 
   return (
     <Layout>
@@ -77,19 +72,34 @@ const OrdersPage = () => {
               View and manage your orders from all channels.
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm">
-              <FilterIcon className="mr-2 h-4 w-4" />
-              Advanced Filter
-            </Button>
-            <Button size="sm">
-              <PlusIcon className="mr-2 h-4 w-4" />
-              New Order
-            </Button>
-          </div>
+          <Button size="sm">
+            <PlusIcon className="mr-2 h-4 w-4" />
+            New Order
+          </Button>
         </div>
+        {/* Table */}
+        <OrderTable orders={orders} loading={loading} />
 
-        <OrderTable orders={orders} />
+        {/* Pagination */}
+        <div className="flex justify-between items-center pt-4">
+          <Button
+            variant="outline"
+            disabled={page <= 1}
+            onClick={() => setPage((p) => p - 1)}
+          >
+            Previous
+          </Button>
+          <span className="text-sm text-muted-foreground">
+            Page {page} of {totalPages}
+          </span>
+          <Button
+            variant="outline"
+            disabled={page >= totalPages}
+            onClick={() => setPage((p) => p + 1)}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </Layout>
   );
